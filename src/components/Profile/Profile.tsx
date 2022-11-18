@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "../../common/Button/Button";
+import "./profile.css";
 
 const Profile: React.FC = () => {
   return (
-    <div>
+    <div className="profile">
       <p>Dave</p>
-      <Button onclick={() => {}}>Logout</Button>
+      <Button className="logout-btn">Logout</Button>
     </div>
   );
 };

@@ -1,0 +1,13 @@
+.profile{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 200px;
+   
+}
+
+.logout-btn{
+    border: 1px solid plum ;
+    height: 20px;
+    width: 50px;
+}
