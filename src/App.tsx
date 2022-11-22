@@ -1,12 +1,12 @@
 import React from "react";
-import CourseCard from "./components/Courses/CourseCard";
+import Courses from "./components/Courses/Courses";
 import Header from "./components/Header/Header";
 
 const App: React.FC = () => {
   return (
     <React.Fragment>
       <Header />
-      <CourseCard />
+      <Courses />
     </React.Fragment>
   );
 };

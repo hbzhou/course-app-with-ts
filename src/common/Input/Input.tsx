@@ -1,7 +1,16 @@
 import React from "react";
 
-const Input: React.FC = () => {
-  return <div>Input</div>;
+interface Props {
+  placeholder?: string;
+  className?: string;
+}
+
+const Input: React.FC<Props> = ({ placeholder, className }) => {
+  return (
+    <div>
+      <input type="text" placeholder={placeholder} className={className} />
+    </div>
+  );
 };
 
 export default Input;
