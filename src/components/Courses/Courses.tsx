@@ -6,9 +6,7 @@ import { mockedCoursesList as courseList } from "../../constants";
 
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const handleSearch = (keyword: string) => {
-    setKeyword(keyword);
-  };
+  const handleSearch = (keyword:string) => { setKeyword(keyword) }
   return (
     <main className="border-solid border-2 border-green-300 m-4">
       <div className="flex justify-between m-4 ">
