@@ -1,7 +1,7 @@
 import React from "react";
 interface Props {
   children: React.ReactNode;
-  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: () => void;
   className?: string;
 }
 
