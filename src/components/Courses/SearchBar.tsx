@@ -13,12 +13,8 @@ const SearchBar: React.FC<Props> = ({ handleSearch }) => {
   };
   return (
     <div className="flex">
-      <Input
-        ref={inputRef}
-        placeholder="Enter Course Name"
-        className=" border-solid border-2 border-orange-200 h-10 w-80 p-1"
-      />
-      <Button className="border-solid border-2 border-purple-500 p-1 mx-4 w-40 max-h-10" onClick={search}>
+      <Input ref={inputRef} placeholder="Enter Course Name" className=" border-orange-200" />
+      <Button className=" border-purple-500 mx-4 w-40 max-h-10" onClick={search}>
         Search
       </Button>
     </div>

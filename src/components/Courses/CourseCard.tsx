@@ -38,7 +38,7 @@ const CourseCard: React.FC<Course> = ({ title, description, duration, creationDa
           <span>{creationDate}</span>
         </div>
         <div className="m-2 text-center">
-          <Button className="border-solid border-2 border-purple-500 min-w-max p-1 w-52">Show course</Button>
+          <Button className=" border-purple-500 min-w-max w-52">Show course</Button>
         </div>
       </div>
     </div>

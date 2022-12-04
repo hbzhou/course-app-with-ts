@@ -1,4 +1,6 @@
 import React, { ChangeEventHandler, forwardRef } from "react";
+import cn from "classnames";
+import styles from "./Input.module.scss";
 
 interface Props {
   placeholder?: string;
@@ -8,7 +10,7 @@ interface Props {
 }
 
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  return <input ref={ref} {...props} />;
+  return <input ref={ref} {...props} className={cn(props.className, styles["input"])} />;
 });
 
 export default Input;
