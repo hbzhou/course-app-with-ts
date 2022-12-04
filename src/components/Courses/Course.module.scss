@@ -1,0 +1,7 @@
+label {
+    @apply font-bold mx-2
+}
+
+h1 {
+    @apply font-bold text-3xl my-4 #{!important}
+}

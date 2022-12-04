@@ -3,8 +3,8 @@ import Button from "../../common/Button/Button";
 
 const Profile: React.FC = () => {
   return (
-    <div className=" flex items-center justify-between w-40">
-      <p className=" font-bold font-mono text-xl">Dave</p>
+    <div className="flex items-center justify-between w-40">
+      <div className="font-bold font-mono text-xl">Dave</div>
       <Button className=" border-purple-700  mr-4 w-20">Logout</Button>
     </div>
   );

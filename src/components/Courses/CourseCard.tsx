@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import Button from "../../common/Button/Button";
 import { mockedAuthorsList } from "../../constants";
+import "./Course.module.scss";
 
 export interface Course {
   id: string;
@@ -21,20 +22,20 @@ const CourseCard: React.FC<Course> = ({ title, description, duration, creationDa
   return (
     <div className="flex justify-between items-center m-4 border-solid border-2 border-green-500">
       <div className="flex flex-col max-w-6xl m-4 min-h-fit">
-        <div className="font-bold text-3xl my-4">{title}</div>
+        <h1>{title}</h1>
         <div>{description}</div>
       </div>
       <div className="flex flex-col justify-evenly flex-grow m-4 min-w-fit">
         <div className="m-2">
-          <label className="font-bold mx-2">Authors:</label>
+          <label>Authors:</label>
           <span>{authorList}</span>
         </div>
         <div className="m-2">
-          <label className="font-bold mx-2">Duration:</label>
+          <label>Duration:</label>
           <span>{duration} hours</span>
         </div>
         <div className="m-2">
-          <label className="font-bold mx-2">Created:</label>
+          <label>Created:</label>
           <span>{creationDate}</span>
         </div>
         <div className="m-2 text-center">
