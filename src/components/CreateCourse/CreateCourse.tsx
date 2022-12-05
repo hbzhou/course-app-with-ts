@@ -5,16 +5,22 @@ import Input from "../../common/Input/Input";
 
 const CreateCourse = () => {
   const authorOptions = [
-    { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
-    { value: "blue", label: "Blue", color: "#0052CC", isDisabled: true },
-    { value: "purple", label: "Purple", color: "#5243AA" },
-    { value: "red", label: "Red", color: "#FF5630", isFixed: true },
-    { value: "orange", label: "Orange", color: "#FF8B00" },
-    { value: "yellow", label: "Yellow", color: "#FFC400" },
-    { value: "green", label: "Green", color: "#36B37E" },
-    { value: "forest", label: "Forest", color: "#00875A" },
-    { value: "slate", label: "Slate", color: "#253858" },
-    { value: "silver", label: "Silver", color: "#666666" },
+    {
+      value: "27cc3006-e93a-4748-8ca8-73d06aa93b6d",
+      label: "Vasiliy Dobkin",
+    },
+    {
+      value: "f762978b-61eb-4096-812b-ebde22838167",
+      label: "Nicolas Kim",
+    },
+    {
+      value: "df32994e-b23d-497c-9e4d-84e4dc02882f",
+      label: "Anna Sidorenko",
+    },
+    {
+      value: "095a1817-d45b-4ed7-9cf7-b2417bcbf748",
+      label: "Valentina Larina",
+    },
   ];
   return (
     <main className="border-solid border-2 border-indigo-500 m-4">
@@ -28,18 +34,19 @@ const CreateCourse = () => {
         </div>
       </div>
       <div className="m-4">
+        <div>Duration</div>
+        <Input type="number" className="h-8 border-amber-300 rounded-md " />
+      </div>
+      <div className="m-4">
         <div>Authors</div>
         <Select
           isMulti
           name="authors"
+          placeholder="Select authors ..."
           options={authorOptions}
-          className="basic-multi-select w-80 border-amber-300 rounded-md "
+          className="basic-multi-select w-80 border-solid border-2 border-amber-300 rounded-md "
           classNamePrefix="select"
         />
-      </div>
-      <div className="m-4">
-        <div>Duration</div>
-        <Input type="number" className="h-8 border-amber-300 rounded-md " />
       </div>
       <div className="m-4">
         <div>Description</div>
