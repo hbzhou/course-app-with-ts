@@ -21,7 +21,7 @@ const CourseCard: React.FC<Course> = ({ title, description, duration, creationDa
 
   return (
     <div className="flex justify-between items-center m-4 border-solid border-2 border-green-500">
-      <div className="flex flex-col max-w-6xl m-4 min-h-fit">
+      <div className="flex flex-col m-4 w-1/2 ">
         <h1>{title}</h1>
         <div>{description}</div>
       </div>
