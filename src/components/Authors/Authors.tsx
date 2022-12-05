@@ -1,10 +1,12 @@
-import React from "react";
+import { useState } from "react";
 import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
-import AuthorItem from "./AuthorItem";
+import Modal from "../../common/Modal/Modal";
 import { mockedAuthorsList as authors } from "../../constants";
+import AddAuthor from "./AddAuthor";
+import AuthorItem from "./AuthorItem";
 
 const Authors = () => {
+  const [modal, setModal] = useState<boolean>(false);
   const open = () => {
     console.log("open dialog");
   };
@@ -23,6 +25,9 @@ const Authors = () => {
           ))}
         </div>
       </div>
+      <Modal show={modal} handleClose={() => setModal(false)}>
+        <AddAuthor />
+      </Modal>
     </div>
   );
 };
