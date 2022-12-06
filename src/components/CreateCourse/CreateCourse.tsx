@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import Select from "react-select";
+import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
 import { Course } from "../Courses/CourseCard";
 const authorOptions = [
@@ -41,20 +42,12 @@ const CreateCourse = () => {
             <div>{errors.title && <span className="mx-1 text-red-500">Required</span>}</div>
           </div>
           <div>
-            <input
-              type="submit"
-              className="mr-4 w-40 border-2 border-solid p-1  border-purple-700"
-              value="Create Course"
-            />
+            <Button className="mr-4 w-40 border-2 border-solid p-1  border-purple-700">Create Course</Button>
           </div>
         </div>
         <div className="m-4">
           <div>Duration</div>
-          <Input
-            type="number"
-            className="h-8 border-amber-300 rounded-md"
-            {...register("duration", { required: true })}
-          />
+          <Input type="number" className="h-8 border-amber-300 rounded-md" {...register("duration", { required: true })} />
           <div>{errors.duration && <span className="mx-1 text-red-500">Required</span>}</div>
         </div>
         <div className="m-4">

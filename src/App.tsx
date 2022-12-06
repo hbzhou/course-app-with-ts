@@ -4,6 +4,8 @@ import Authors from "./components/Authors/Authors";
 import Courses from "./components/Courses/Courses";
 import CreateCourse from "./components/CreateCourse/CreateCourse";
 import Header from "./components/Header/Header";
+import Login from "./components/Login/Login";
+import Registration from "./components/Registration/Registration";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +16,8 @@ const App: React.FC = () => {
         <Route path="/courses" element={<Courses />} />
         <Route path="/authors" element={<Authors />} />
         <Route path="/createCourse" element={<CreateCourse />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
       </Routes>
     </BrowserRouter>
   );
