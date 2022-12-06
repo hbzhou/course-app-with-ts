@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
+import Label from "../../common/Label/Label";
+import Title from "../../common/Title/Title";
 
 interface User {
   name: string;
@@ -24,19 +26,19 @@ const Registration = () => {
   return (
     <div className="m-4 border-2 border-blue-600 border-solid flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="text-2xl font-bold text-center my-2">Registration</div>
+        <Title>Registration</Title>
         <div className="my-2">
-          <div className="text-xl">Name</div>
+          <Label>Name</Label>
           <Input placeholder="Enter name" className=" border-amber-300 " {...register("name", { required: true })} />
           {errors.name && <div className=" text-red-500">Required</div>}
         </div>
         <div className="my-2">
-          <div className="text-xl">Email</div>
+          <Label>Email</Label>
           <Input type="email" placeholder="Enter email" className=" border-amber-300" {...register("email", { required: true })} />
           {errors.email && <div className=" text-red-500">Required</div>}
         </div>
         <div className="my-2">
-          <div className="text-xl">Password</div>
+          <Label>Password</Label>
           <Input type="password" placeholder="Enter password" className=" border-amber-300" {...register("password", { required: true })} />
           {errors.password && <div className=" text-red-500">Required</div>}
         </div>

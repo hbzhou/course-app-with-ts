@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
+import Label from "../../common/Label/Label";
+import Title from "../../common/Title/Title";
 
 interface LoginRequest {
   email: string;
@@ -20,16 +22,16 @@ const Login = () => {
   return (
     <div className="border-2 border-solid border-blue-400 flex justify-center m-4">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="text-3xl font-bold text-center my-2">Login</div>
+        <Title>Login</Title>
         <div className="my-2">
-          <div className="text-xl">Email</div>
+          <Label>Email</Label>
           <div>
             <Input className=" border-amber-300" placeholder="Enter email" {...register("email", { required: true })} />
             {errors.email && <span className=" text-red-500">Required</span>}
           </div>
         </div>
         <div className="my-2">
-          <div className="text-xl">Password</div>
+          <Label>Password</Label>
           <div>
             <Input
               className=" border-amber-300"

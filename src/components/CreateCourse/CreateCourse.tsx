@@ -2,6 +2,7 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
+import Title from "../../common/Title/Title";
 import { Course } from "../Courses/CourseCard";
 const authorOptions = [
   {
@@ -33,7 +34,7 @@ const CreateCourse = () => {
 
   return (
     <main className="border-solid border-2 border-indigo-500 m-4">
-      <div className=" text-center font-bold text-3xl m-2">Create Course</div>
+      <Title>Create Course</Title>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between items-center m-4">
           <div>
