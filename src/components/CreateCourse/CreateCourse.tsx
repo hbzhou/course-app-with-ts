@@ -25,12 +25,10 @@ const CreateCourse = () => {
   const {
     register,
     handleSubmit,
-    watch,
     control,
-    // formState: { errors },
+    formState: { errors },
   } = useForm<Course>();
   const onSubmit: SubmitHandler<Course> = (data) => console.log(data);
-  console.log(watch("title"));
 
   return (
     <main className="border-solid border-2 border-indigo-500 m-4">
@@ -40,6 +38,7 @@ const CreateCourse = () => {
           <div>
             <div>Title</div>
             <Input className="h-8 border-amber-300 rounded-md" {...register("title", { required: true })} />
+            <div>{errors.title && <span className="mx-1 text-red-500">Required</span>}</div>
           </div>
           <div>
             <input
@@ -56,13 +55,15 @@ const CreateCourse = () => {
             className="h-8 border-amber-300 rounded-md"
             {...register("duration", { required: true })}
           />
+          <div>{errors.duration && <span className="mx-1 text-red-500">Required</span>}</div>
         </div>
         <div className="m-4">
           <div>Authors</div>
           <Controller
             control={control}
-            // defaultValue={authorOptions.map((c) => c.value)}
+            defaultValue={[]}
             name="authors"
+            rules={{ required: true }}
             render={({ field: { onChange, value, ref } }) => (
               <Select
                 ref={ref}
@@ -74,6 +75,7 @@ const CreateCourse = () => {
               />
             )}
           />
+          <div>{errors.authors && <span className="mx-1 text-red-500">Required</span>}</div>
         </div>
         <div className="m-4">
           <div>Description</div>
@@ -82,6 +84,7 @@ const CreateCourse = () => {
             className="block p-2.5 w-full rounded-md border-solid border-2 border-amber-300"
             {...register("description", { required: true })}
           ></textarea>
+          <div>{errors.description && <span className="mx-1 text-red-500">Required</span>}</div>
         </div>
       </form>
     </main>
