@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import { mockedAuthorsList } from "../../constants";
 import "./Course.module.scss";
@@ -14,7 +15,8 @@ export interface Course {
 
 const authorDict = new Map(mockedAuthorsList.map((author) => [author.id, author.name]));
 
-const CourseCard: React.FC<Course> = ({ title, description, duration, creationDate, authors }) => {
+const CourseCard: React.FC<Course> = ({ id, title, description, duration, creationDate, authors }) => {
+  const navigate = useNavigate();
   const authorList = useMemo(() => {
     return authors.map((id) => authorDict.get(id)).join(",");
   }, [authors]);
@@ -39,7 +41,9 @@ const CourseCard: React.FC<Course> = ({ title, description, duration, creationDa
           <span>{creationDate}</span>
         </div>
         <div className="m-2 text-center">
-          <Button className=" border-purple-500 min-w-max w-52">Show course</Button>
+          <Button className=" border-purple-500 min-w-max w-52" onClick={() => navigate(`/courses/${id}`)}>
+            Show course
+          </Button>
         </div>
       </div>
     </div>
