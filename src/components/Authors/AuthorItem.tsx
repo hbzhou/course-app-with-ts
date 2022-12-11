@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../../common/Button/Button";
 
-interface Author {
+export interface Author {
   id: string;
   name: string;
 }

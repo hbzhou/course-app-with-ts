@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
-import { mockedAuthorsList } from "../../constants";
+import { mockedAuthorsList as authorList } from "../../constants";
 import "./Course.module.scss";
 
 export interface Course {
@@ -13,11 +13,11 @@ export interface Course {
   authors: string[];
 }
 
-const authorDict = new Map(mockedAuthorsList.map((author) => [author.id, author.name]));
+const authorDict = new Map(authorList.map((author) => [author.id, author.name]));
 
 const CourseCard: React.FC<Course> = ({ id, title, description, duration, creationDate, authors }) => {
   const navigate = useNavigate();
-  const authorList = useMemo(() => {
+  const authorNames = useMemo(() => {
     return authors.map((id) => authorDict.get(id)).join(",");
   }, [authors]);
 
@@ -30,7 +30,7 @@ const CourseCard: React.FC<Course> = ({ id, title, description, duration, creati
       <div className="flex flex-col justify-evenly flex-grow m-4 min-w-fit">
         <div className="m-2">
           <label>Authors:</label>
-          <span>{authorList}</span>
+          <span>{authorNames}</span>
         </div>
         <div className="m-2">
           <label>Duration:</label>
