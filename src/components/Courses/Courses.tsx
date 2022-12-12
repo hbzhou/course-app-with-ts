@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../common/Button/Button";
+import { Author } from "../Authors/AuthorItem";
 import CourseCard, { Course } from "./CourseCard";
 import SearchBar from "./SearchBar";
 
@@ -8,9 +9,17 @@ interface QueryAllCoursesResponse {
   result: Course[];
 }
 
+interface QueryAllAuthorsResp {
+  successful: boolean;
+  result: Author[];
+}
+
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
   const [courses, setCourses] = useState<Course[]>([]);
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const authorDict = new Map(authors.map((author) => [author.id, author.name]));
+
   const handleSearch = (keyword: string) => {
     setKeyword(keyword);
   };
@@ -29,7 +38,23 @@ const Courses: React.FC = () => {
     }
   };
 
+  const getAuthors = async () => {
+    const token = localStorage.getItem("token") ?? "";
+    const response = await fetch("/authors/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    const queryAllAuthorsResp: QueryAllAuthorsResp = await response.json();
+    if (queryAllAuthorsResp.successful) {
+      setAuthors(queryAllAuthorsResp.result);
+    }
+  };
+
   useEffect(() => {
+    getAuthors();
     getCourses();
   }, []);
 
@@ -41,9 +66,10 @@ const Courses: React.FC = () => {
       </div>
       {courses
         .filter((course) => course.title.indexOf(keyword) > -1)
-        .map((course: Course) => (
-          <CourseCard key={course.id} {...course} />
-        ))}
+        .map((course: Course) => {
+          const courseCard = { ...course, authors: course.authors.map((key) => authorDict.get(key) ?? "") };
+          return <CourseCard key={course.id} {...courseCard} />;
+        })}
     </main>
   );
 };
