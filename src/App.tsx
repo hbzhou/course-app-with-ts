@@ -7,21 +7,25 @@ import CreateCourse from "./components/CreateCourse/CreateCourse";
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Courses />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<CourseInfo />} />
-        <Route path="/authors" element={<Authors />} />
-        <Route path="/createCourse" element={<CreateCourse />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Courses />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:id" element={<CourseInfo />} />
+          <Route path="/authors" element={<Authors />} />
+          <Route path="/createCourse" element={<CreateCourse />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registration />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 

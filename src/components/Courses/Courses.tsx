@@ -2,60 +2,26 @@ import React, { useEffect, useState } from "react";
 import Button from "../../common/Button/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
-
-interface QueryAllCoursesResponse {
-  successful: boolean;
-  result: Course[];
-}
-
-interface QueryAllAuthorsResp {
-  successful: boolean;
-  result: Author[];
-}
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthors, selectCourses } from "../../store/store";
+import { fetchCourses } from "../../store/course/course.thunk";
+import { fetchAuthors } from "../../store/author/author.thunk";
 
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [authors, setAuthors] = useState<Author[]>([]);
+  const dispatch = useDispatch();
+  const courses = useSelector(selectCourses);
+  const authors = useSelector(selectAuthors);
   const authorDict = new Map(authors.map((author) => [author.id, author.name]));
 
   const handleSearch = (keyword: string) => {
     setKeyword(keyword);
   };
-  const getCourses = async () => {
-    const token = localStorage.getItem("token") ?? "";
-    const response = await fetch("/courses/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const queryAllCoursesResponse: QueryAllCoursesResponse = await response.json();
-    if (queryAllCoursesResponse.successful) {
-      setCourses(queryAllCoursesResponse.result);
-    }
-  };
-
-  const getAuthors = async () => {
-    const token = localStorage.getItem("token") ?? "";
-    const response = await fetch("/authors/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const queryAllAuthorsResp: QueryAllAuthorsResp = await response.json();
-    if (queryAllAuthorsResp.successful) {
-      setAuthors(queryAllAuthorsResp.result);
-    }
-  };
 
   useEffect(() => {
-    getAuthors();
-    getCourses();
-  }, []);
+    dispatch(fetchAuthors() as any);
+    dispatch(fetchCourses() as any);
+  }, [dispatch]);
 
   return (
     <main className="border-solid border-2 border-green-300 m-4">
