@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Title from "../../common/Title/Title";
-import { Course } from "../Courses/CourseCard";
 
 interface QueryCourseResponse {
   successful: boolean;

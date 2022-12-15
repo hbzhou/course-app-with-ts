@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../../common/Button/Button";
 import Modal from "../../common/Modal/Modal";
 import AddAuthor from "./AddAuthor";
-import AuthorItem, { Author } from "./AuthorItem";
+import AuthorItem from "./AuthorItem";
 
 interface QueryAllAuthorsResp {
   successful: boolean;

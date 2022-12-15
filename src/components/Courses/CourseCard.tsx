@@ -3,15 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import "./Course.module.scss";
 
-export interface Course {
-  id: string;
-  title: string;
-  description: string;
-  creationDate: string;
-  duration: number;
-  authors: string[];
-}
-
 const CourseCard: React.FC<Course> = ({ id, title, description, duration, creationDate, authors }) => {
   const navigate = useNavigate();
 

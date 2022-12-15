@@ -1,11 +1,6 @@
 import React from "react";
 import Button from "../../common/Button/Button";
 
-export interface Author {
-  id: string;
-  name: string;
-}
-
 const AuthorItem: React.FC<Author> = ({ name }) => {
   return (
     <div className="flex items-center my-4 justify-center">

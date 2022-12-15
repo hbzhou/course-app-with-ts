@@ -3,7 +3,6 @@ import Select from "react-select";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
 import Title from "../../common/Title/Title";
-import { Course } from "../Courses/CourseCard";
 const authorOptions = [
   {
     value: "27cc3006-e93a-4748-8ca8-73d06aa93b6d",

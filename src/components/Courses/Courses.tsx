@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../common/Button/Button";
-import { Author } from "../Authors/AuthorItem";
-import CourseCard, { Course } from "./CourseCard";
+import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
 
 interface QueryAllCoursesResponse {
