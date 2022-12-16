@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AuthorSliceState = [];
 
-type AuthorSliceState = Array<Author>;
+export type AuthorSliceState = Array<Author>;
 
 export const authorSlice = createSlice({
   name: "author",

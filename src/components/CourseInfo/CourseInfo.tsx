@@ -1,33 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Title from "../../common/Title/Title";
-
-interface QueryCourseResponse {
-  successful: boolean;
-  result: Course;
-}
+import { useSelector } from "react-redux";
+import { selectAuthors, selectCourses } from "../../store/store";
 
 const CourseInfo: React.FC = () => {
   const { id } = useParams();
-  const [course, setCourse] = useState<Course>();
-  const getCourse = async () => {
-    const token = localStorage.getItem("token") ?? "";
-    const response = await fetch(`/courses/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
-    const queryCourseResp: QueryCourseResponse = await response.json();
-    if (queryCourseResp.successful) {
-      setCourse(queryCourseResp.result);
-    }
-  };
-
-  useEffect(() => {
-    getCourse();
-  });
+  const course = useSelector(selectCourses).find((course) => course.id === id);
+  const authors = useSelector(selectAuthors);
+  const authorDict = new Map(authors.map((author) => [author.id, author.name]));
   if (!course) {
     return <div>Loading</div>;
   }
@@ -53,7 +34,7 @@ const CourseInfo: React.FC = () => {
             <div className="font-bold mr-3">Authors:</div>
             <div>
               {course.authors.map((author) => {
-                return <div key={author}>author</div>;
+                return <div key={author}>{authorDict.get(author)}</div>;
               })}
             </div>
           </div>

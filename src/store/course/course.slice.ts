@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type CourseSliceState = Array<Course>;
+export type CourseSliceState = Array<Course>;
 
 const initialState: CourseSliceState = [];
 

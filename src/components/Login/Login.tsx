@@ -1,46 +1,24 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
 import Label from "../../common/Label/Label";
 import Title from "../../common/Title/Title";
-
-interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  successful: boolean;
-  result: string;
-  user: User;
-}
-
-interface User {
-  name: string;
-  email: string;
-}
+import { AppDispatch } from "../../store/store";
+import { login, LoginRequest } from "../../store/user/user.thunk";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequest>();
-  const onSubmit = async (request: LoginRequest) => {
-    const response = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    });
-    const loginResponse: LoginResponse = await response.json();
-    if (loginResponse.successful) {
-      localStorage.setItem("token", loginResponse.result);
-      navigate("/courses");
-    }
+  const onSubmit = (request: LoginRequest) => {
+    dispatch(login(request));
+    navigate("/courses");
   };
   return (
     <div className="border-2 border-solid border-blue-400 flex justify-center m-4">
