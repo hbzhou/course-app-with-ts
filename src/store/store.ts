@@ -4,8 +4,8 @@ import courseReducer from "./course/course.slice";
 import authorReducer from "./author/author.slice";
 
 export interface AppState {
-  courses: { courses: Array<Course> };
-  authors: { authors: Array<Author> };
+  courses: Array<Course>;
+  authors: Array<Author>;
 }
 
 export const store = configureStore({
@@ -16,6 +16,5 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-
-export const selectCourses = (state: RootState) => state.courses.courses;
-export const selectAuthors = (state: RootState) => state.authors.authors;
+export const selectCourses = (state: RootState) => state.courses;
+export const selectAuthors = (state: RootState) => state.authors;

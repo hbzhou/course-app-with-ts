@@ -1,20 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { mockedAuthorsList as authors } from "../../constants";
 
-const initialState: AuthorSliceState = {
-  authors,
-};
+const initialState: AuthorSliceState = [];
 
-type AuthorSliceState = {
-  authors: Array<Author>;
-};
+type AuthorSliceState = Array<Author>;
 
 export const authorSlice = createSlice({
   name: "author",
   initialState,
   reducers: {
     setAuthors: (state: AuthorSliceState, action: PayloadAction<Array<Author>>) => {
-      state.authors = action.payload;
+      return [...action.payload];
     },
   },
 });
