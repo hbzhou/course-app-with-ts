@@ -3,13 +3,13 @@ import Button from "../../common/Button/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthors, selectCourses } from "../../store/store";
+import { AppDispatch, selectAuthors, selectCourses } from "../../store/store";
 import { fetchCourses } from "../../store/course/course.thunk";
 import { fetchAuthors } from "../../store/author/author.thunk";
 
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const courses = useSelector(selectCourses);
   const authors = useSelector(selectAuthors);
   const authorDict = new Map(authors.map((author) => [author.id, author.name]));
@@ -19,8 +19,8 @@ const Courses: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAuthors() as any);
-    dispatch(fetchCourses() as any);
+    dispatch(fetchAuthors());
+    dispatch(fetchCourses());
   }, [dispatch]);
 
   return (

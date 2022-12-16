@@ -1,3 +1,4 @@
+import { AppDispatch } from "../store";
 import { actions } from "./course.slice";
 
 interface QueryAllCoursesResponse {
@@ -5,7 +6,7 @@ interface QueryAllCoursesResponse {
   result: Course[];
 }
 
-export const fetchCourses = () => async (dispatch: any) => {
+export const fetchCourses = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
   const response = await fetch("/courses/all", {
     method: "GET",

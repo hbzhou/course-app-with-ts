@@ -16,5 +16,6 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export const selectCourses = (state: RootState) => state.courses;
 export const selectAuthors = (state: RootState) => state.authors;

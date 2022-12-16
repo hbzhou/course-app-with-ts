@@ -1,3 +1,4 @@
+import { AppDispatch } from "../store";
 import { actions } from "./author.slice";
 
 interface QueryAllAuthorsResp {
@@ -5,7 +6,7 @@ interface QueryAllAuthorsResp {
   result: Author[];
 }
 
-export const fetchAuthors = () => async (dispatch: any) => {
+export const fetchAuthors = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
   const response = await fetch("/authors/all", {
     method: "GET",
