@@ -1,16 +1,13 @@
 import React from "react";
 import cn from "classnames";
-import styles from "./Button.module.scss";
 
-interface Props {
-  children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
-}
-
-const Button: React.FC<Props> = ({ children, onClick, className }) => {
+const Button: React.FC<React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>> = ({
+  children,
+  className,
+  ...rest
+}) => {
   return (
-    <button className={cn(className, styles["btn"])} onClick={onClick}>
+    <button className={cn("border-solid border-2 p-1", className)} {...rest}>
       {children}
     </button>
   );
