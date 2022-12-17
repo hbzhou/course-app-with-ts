@@ -20,3 +20,21 @@ export const fetchCourses = () => async (dispatch: AppDispatch) => {
     dispatch(actions.setCourses(queryAllCoursesResponse.result));
   }
 };
+
+export const createCourse = (course: Course) => async (dispatch: AppDispatch) => {
+  const token = localStorage.getItem("token") ?? "";
+  const response = await fetch("/courses/add", {
+    method: "POST",
+    body: JSON.stringify(course),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+  const data = await response.json();
+  if (data.successful) {
+    dispatch(actions.addCourse(data.result));
+  } else {
+    alert(data.result);
+  }
+};

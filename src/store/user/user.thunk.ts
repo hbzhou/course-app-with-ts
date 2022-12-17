@@ -25,6 +25,7 @@ export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatc
   });
   const loginResponse: LoginResponse = await response.json();
   if (loginResponse.successful) {
+    localStorage.setItem("token", loginResponse.result);
     const user = loginResponse.user;
     dispatch(
       actions.login({

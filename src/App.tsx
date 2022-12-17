@@ -16,13 +16,13 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Courses />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/courses/:id" element={<CourseInfo />} />
-          <Route path="/authors" element={<Authors />} />
-          <Route path="/createCourse" element={<CreateCourse />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Registration />} />
+          <Route path='/' element={<Courses />} />
+          <Route path='/courses' element={<Courses />} />
+          <Route path='/courses/:id' element={<CourseInfo />} />
+          <Route path='/authors' element={<Authors />} />
+          <Route path='/courses/add' element={<CreateCourse />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Registration />} />
         </Routes>
       </BrowserRouter>
     </Provider>

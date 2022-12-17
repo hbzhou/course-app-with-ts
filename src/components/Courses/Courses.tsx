@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
-import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, selectAuthors, selectCourses } from "../../store/store";
 import { fetchCourses } from "../../store/course/course.thunk";
 import { fetchAuthors } from "../../store/author/author.thunk";
 
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const courses = useSelector(selectCourses);
   const authors = useSelector(selectAuthors);
@@ -27,7 +29,7 @@ const Courses: React.FC = () => {
     <main className="border-solid border-2 border-green-300 m-4">
       <div className="flex justify-between m-4 ">
         <SearchBar handleSearch={handleSearch} />
-        <Button className=" border-purple-500 w-56 max-h-10 min-w-fit">Add new course</Button>
+        <Button className=" border-purple-500 w-56 max-h-10 min-w-fit" onClick={() => navigate("/courses/add")}>Add new course</Button>
       </div>
       {courses
         .filter((course) => course.title.indexOf(keyword) > -1)

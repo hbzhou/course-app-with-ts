@@ -11,6 +11,9 @@ export const courseSlice = createSlice({
     setCourses: (state: CourseSliceState, action: PayloadAction<Array<Course>>) => {
       return [...action.payload];
     },
+    addCourse: (state: CourseSliceState, action: PayloadAction<Course>) => {
+      return [...state, action.payload];
+    },
   },
 });
 
