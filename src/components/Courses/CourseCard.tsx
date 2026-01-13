@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../common/Button/Button";
-import "./Course.module.scss";
 import { Course } from "../../types/course";
 
 const CourseCard: React.FC<Course> = ({ id, title, description, duration, creationDate, authors }) => {
@@ -10,20 +9,20 @@ const CourseCard: React.FC<Course> = ({ id, title, description, duration, creati
   return (
     <div className='flex justify-between items-center m-4 border-solid border-2 border-green-500'>
       <div className='flex flex-col m-4 w-1/2 '>
-        <h1>{title}</h1>
+        <h1 className='font-bold text-3xl my-4'>{title}</h1>
         <div>{description}</div>
       </div>
       <div className='flex flex-col justify-evenly flex-grow m-4 min-w-fit'>
         <div className='m-2'>
-          <label>Authors:</label>
+          <label className='font-bold mx-2'>Authors:</label>
           <span>{authors.join(",")}</span>
         </div>
         <div className='m-2'>
-          <label>Duration:</label>
+          <label className='font-bold mx-2'>Duration:</label>
           <span>{duration} hours</span>
         </div>
         <div className='m-2'>
-          <label>Created:</label>
+          <label className='font-bold mx-2'>Created:</label>
           <span>{creationDate}</span>
         </div>
         <div className='m-2 text-center'>
