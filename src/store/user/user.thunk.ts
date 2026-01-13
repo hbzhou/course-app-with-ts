@@ -1,4 +1,4 @@
-import { AppDispatch } from "../store";
+import { AppDispatch } from "@/store/store";
 import { actions } from "./user.slice";
 
 export interface LoginRequest {

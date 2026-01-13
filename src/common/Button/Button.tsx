@@ -1,16 +1,3 @@
-import React from "react";
-import cn from "classnames";
+export { Button } from "@/components/ui/button";
+export type { ButtonProps } from "@/components/ui/button";
 
-const Button: React.FC<React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>> = ({
-  children,
-  className,
-  ...rest
-}) => {
-  return (
-    <button className={cn("border-solid border-2 p-1", className)} {...rest}>
-      {children}
-    </button>
-  );
-};
-
-export default Button;

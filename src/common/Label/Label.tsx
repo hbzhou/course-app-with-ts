@@ -1,13 +1,2 @@
-import React from "react";
-import cn from "classnames";
+export { Label } from "@/components/ui/label";
 
-interface Props {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const Label: React.FC<Props> = ({ children, className }) => {
-  return <div className={cn("text-xl", className)}>{children}</div>;
-};
-
-export default Label;

@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
-import Label from "../../common/Label/Label";
-import Title from "../../common/Title/Title";
-import { AppDispatch } from "../../store/store";
-import { login, LoginRequest } from "../../store/user/user.thunk";
+import { Button } from "@/common/Button/Button";
+import { Input } from "@/common/Input/Input";
+import { Label } from "@/common/Label/Label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { AppDispatch } from "@/store/store";
+import { login, LoginRequest } from "@/store/user/user.thunk";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,39 +21,48 @@ const Login = () => {
     navigate("/courses");
   };
   return (
-    <div className="border-2 border-solid border-blue-400 flex justify-center m-4">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Title>Login</Title>
-        <div className="my-2">
-          <Label>Email</Label>
-          <div>
-            <Input className=" border-amber-300" placeholder="Enter email" {...register("email", { required: true })} />
-            {errors.email && <span className=" text-red-500">Required</span>}
-          </div>
-        </div>
-        <div className="my-2">
-          <Label>Password</Label>
-          <div>
-            <Input
-              className=" border-amber-300"
-              type="password"
-              placeholder="Enter password"
-              {...register("password", { required: true })}
-            />
-            {errors.password && <span className=" text-red-500">Required</span>}
-          </div>
-          <div className="my-4 text-center">
-            <Button className="border-purple-500 w-36 h-10 rounded-md"> Login </Button>
-          </div>
-          <div>
-            If you don't have an account you can {""}
-            <Link className=" text-blue-500" to="/register">
-              register
-            </Link>
-            {""} here
-          </div>
-        </div>
-      </form>
+    <div className="flex justify-center items-center min-h-[calc(100vh-200px)] p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>Enter your credentials to access your account</CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter email"
+                {...register("email", { required: true })}
+              />
+              {errors.email && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+                {...register("password", { required: true })}
+              />
+              {errors.password && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button type="submit" className="w-full">
+              Login
+            </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              Don't have an account?{" "}
+              <Link className="text-primary hover:underline font-medium" to="/register">
+                Register here
+              </Link>
+            </p>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 };

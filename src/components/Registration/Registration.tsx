@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
-import Label from "../../common/Label/Label";
-import Title from "../../common/Title/Title";
+import { Button } from "@/common/Button/Button";
+import { Input } from "@/common/Input/Input";
+import { Label } from "@/common/Label/Label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface User {
   name: string;
@@ -24,34 +24,57 @@ const Registration = () => {
   };
 
   return (
-    <div className="m-4 border-2 border-blue-600 border-solid flex justify-center">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Title>Registration</Title>
-        <div className="my-2">
-          <Label>Name</Label>
-          <Input placeholder="Enter name" className=" border-amber-300 " {...register("name", { required: true })} />
-          {errors.name && <div className=" text-red-500">Required</div>}
-        </div>
-        <div className="my-2">
-          <Label>Email</Label>
-          <Input type="email" placeholder="Enter email" className=" border-amber-300" {...register("email", { required: true })} />
-          {errors.email && <div className=" text-red-500">Required</div>}
-        </div>
-        <div className="my-2">
-          <Label>Password</Label>
-          <Input type="password" placeholder="Enter password" className=" border-amber-300" {...register("password", { required: true })} />
-          {errors.password && <div className=" text-red-500">Required</div>}
-        </div>
-        <div className="my-2 text-center">
-          <Button className=" border-purple-500 w-36 rounded-md">Registration</Button>
-        </div>
-        <div>
-          if you have an account you can {""}
-          <Link to="/login" className=" text-blue-500">
-            Login
-          </Link>
-        </div>
-      </form>
+    <div className="flex justify-center items-center min-h-[calc(100vh-200px)] p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl">Create an Account</CardTitle>
+          <CardDescription>Enter your information to get started</CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                placeholder="Enter name"
+                {...register("name", { required: true })}
+              />
+              {errors.name && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter email"
+                {...register("email", { required: true })}
+              />
+              {errors.email && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+                {...register("password", { required: true })}
+              />
+              {errors.password && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button type="submit" className="w-full">
+              Register
+            </Button>
+            <p className="text-sm text-center text-muted-foreground">
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary hover:underline font-medium">
+                Login here
+              </Link>
+            </p>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 };
