@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import Title from "../../common/Title/Title";
 import { useSelector } from "react-redux";
 import { selectAuthors, selectCourses } from "../../store/store";
+import { Course } from "../../types/course";
+import { Author } from "../../types/author";
 
 const CourseInfo: React.FC = () => {
   const { id } = useParams();
-  const course = useSelector(selectCourses).find((course) => course.id === id);
+  const course = useSelector(selectCourses).find((course: Course) => course.id === id);
   const authors = useSelector(selectAuthors);
-  const authorDict = new Map(authors.map((author) => [author.id, author.name]));
+  const authorDict = new Map(authors.map((author: Author) => [author.id, author.name]));
   if (!course) {
     return <div>Loading</div>;
   }
@@ -33,8 +35,8 @@ const CourseInfo: React.FC = () => {
           <div className="flex">
             <div className="font-bold mr-3">Authors:</div>
             <div>
-              {course.authors.map((author) => {
-                return <div key={author}>{authorDict.get(author)}</div>;
+              {course.authors.map((author: string) => {
+                return <div key={author}>{authorDict.get(author) ?? ""}</div>;
               })}
             </div>
           </div>

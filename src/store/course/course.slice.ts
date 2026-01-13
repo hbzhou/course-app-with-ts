@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Course } from "../../types/course";
 
 export type CourseSliceState = Array<Course>;
 

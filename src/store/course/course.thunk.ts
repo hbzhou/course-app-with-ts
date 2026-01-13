@@ -1,5 +1,6 @@
 import { AppDispatch } from "../store";
 import { actions } from "./course.slice";
+import { Course } from "../../types/course";
 
 interface QueryAllCoursesResponse {
   successful: boolean;

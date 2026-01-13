@@ -1,4 +1,4 @@
-declare type Author = {
+export type Author = {
   id: string;
   name: string;
 };

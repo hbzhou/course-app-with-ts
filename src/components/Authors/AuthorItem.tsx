@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../common/Button/Button";
+import { Author } from "../../types/author";
 
 const AuthorItem: React.FC<Author> = ({ name }) => {
   return (

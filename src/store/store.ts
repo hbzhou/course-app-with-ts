@@ -11,11 +11,11 @@ export interface AppState {
 }
 
 export const store = configureStore({
-  reducer: combineReducers<AppState>({
+  reducer: {
     courses: courseReducer,
     authors: authorReducer,
     currentUser: userReducer,
-  }),
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
