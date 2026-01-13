@@ -9,7 +9,7 @@ interface QueryAllAuthorsResp {
 
 export const fetchAuthors = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/authors/all", {
+  const response = await fetch("/api/authors/all", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

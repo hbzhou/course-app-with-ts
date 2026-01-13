@@ -9,7 +9,7 @@ interface QueryAllCoursesResponse {
 
 export const fetchCourses = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/courses/all", {
+  const response = await fetch("/api/courses/all", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const fetchCourses = () => async (dispatch: AppDispatch) => {
 
 export const createCourse = (course: Course) => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/courses/add", {
+  const response = await fetch("/api/courses/add", {
     method: "POST",
     body: JSON.stringify(course),
     headers: {
