@@ -1,5 +1,6 @@
 import { AppDispatch } from "../store";
 import { actions } from "./author.slice";
+import { Author } from "../../types/author";
 
 interface QueryAllAuthorsResp {
   successful: boolean;

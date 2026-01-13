@@ -1,4 +1,4 @@
-declare type Course = {
+export type Course = {
   id: string;
   title: string;
   description: string;

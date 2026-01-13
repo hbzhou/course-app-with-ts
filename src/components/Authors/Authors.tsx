@@ -3,6 +3,7 @@ import Button from "../../common/Button/Button";
 import Modal from "../../common/Modal/Modal";
 import AddAuthor from "./AddAuthor";
 import AuthorItem from "./AuthorItem";
+import { Author } from "../../types/author";
 
 interface QueryAllAuthorsResp {
   successful: boolean;

@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, selectAuthors } from "../../store/store";
 import { createCourse } from "../../store/course/course.thunk";
+import { Course } from "../../types/course";
+import { Author } from "../../types/author";
 
 const CreateCourse: React.FC = () => {
   const {
@@ -23,7 +25,7 @@ const CreateCourse: React.FC = () => {
     dispatch(createCourse(data));
     navigator("/courses");
   };
-  const authorOptions = useSelector(selectAuthors).map((author) => {
+  const authorOptions = useSelector(selectAuthors).map((author: Author) => {
     return { value: author.id, label: author.name };
   });
 
@@ -60,8 +62,8 @@ const CreateCourse: React.FC = () => {
             render={({ field: { onChange, value, ref } }) => (
               <Select
                 ref={ref}
-                value={authorOptions.filter((c) => value.includes(c.value))}
-                onChange={(val) => onChange(val.map((c) => c.value))}
+                value={authorOptions.filter((c: { value: string; label: string }) => value.includes(c.value))}
+                onChange={(val) => onChange(val.map((c: { value: string; label: string }) => c.value))}
                 options={authorOptions}
                 isMulti
                 className='border-2 border-solid border-amber-300 w-1/2'
