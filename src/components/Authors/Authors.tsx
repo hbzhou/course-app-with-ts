@@ -18,7 +18,7 @@ const Authors = () => {
 
   const getAuthorList = async () => {
     const token = localStorage.getItem("token") ?? "";
-    const fetchResp = await fetch("/authors/all", {
+    const fetchResp = await fetch("/api/authors/all", {
       method: "GET",
       headers: {
         Authorization: token,
