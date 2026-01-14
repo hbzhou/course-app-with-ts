@@ -1,12 +1,14 @@
 import React from "react";
-import Logo from "../Logo/Logo";
-import Profile from "../Profile/Profile";
+import Logo from "@/components/Logo/Logo";
+import Profile from "@/components/Profile/Profile";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex justify-between items-center h-20 border-solid border-2 border-red-300 mx-4">
-      <Logo />
-      <Profile />
+    <header className="border-b bg-card">
+      <div className="container mx-auto flex justify-between items-center h-16 px-6">
+        <Logo />
+        <Profile />
+      </div>
     </header>
   );
 };

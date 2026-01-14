@@ -1,47 +1,93 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import Title from "../../common/Title/Title";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectAuthors, selectCourses } from "../../store/store";
-import { Course } from "../../types/course";
-import { Author } from "../../types/author";
+import { selectAuthors, selectCourses } from "@/store/store";
+import { Course } from "@/types/course";
+import { Author } from "@/types/author";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/common/Button/Button";
+import { Clock, Calendar, Users, ArrowLeft } from "lucide-react";
 
 const CourseInfo: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const course = useSelector(selectCourses).find((course: Course) => course.id === id);
   const authors = useSelector(selectAuthors);
   const authorDict = new Map(authors.map((author: Author) => [author.id, author.name]));
+
   if (!course) {
-    return <div>Loading</div>;
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardContent className="py-12 text-center">
+            <p className="text-muted-foreground">Course not found</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
+
   return (
-    <div className=" border-solid border-2 border-blue-300 m-4">
-      <Title>{course.title}</Title>
-      <div className="flex">
-        <div className=" w-1/2 m-4">{course!.description}</div>
-        <div className="m-4">
-          <div>
-            <span className="font-bold mr-3">ID:</span>
-            <span>{course.id}</span>
-          </div>
-          <div>
-            <span className="font-bold mr-3">Duration:</span>
-            <span>{course.duration} hours</span>
-          </div>
-          <div>
-            <span className="font-bold mr-3">Created:</span>
-            <span>{course.creationDate}</span>
-          </div>
-          <div className="flex">
-            <div className="font-bold mr-3">Authors:</div>
-            <div>
-              {course.authors.map((author: string) => {
-                return <div key={author}>{authorDict.get(author) ?? ""}</div>;
-              })}
+    <div className="container mx-auto p-6 max-w-4xl">
+      <Button
+        variant="ghost"
+        className="mb-4"
+        onClick={() => navigate("/courses")}
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back to Courses
+      </Button>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl">{course.title}</CardTitle>
+          <CardDescription className="text-base mt-4">{course.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <Clock className="h-5 w-5 text-muted-foreground mt-0.5" />
+                <div>
+                  <p className="font-semibold">Duration</p>
+                  <p className="text-muted-foreground">{course.duration} hours</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Calendar className="h-5 w-5 text-muted-foreground mt-0.5" />
+                <div>
+                  <p className="font-semibold">Created</p>
+                  <p className="text-muted-foreground">{course.creationDate}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <Users className="h-5 w-5 text-muted-foreground mt-0.5" />
+              <div className="flex-1">
+                <p className="font-semibold mb-2">Authors</p>
+                <div className="flex flex-wrap gap-2">
+                  {course.authors.map((author: string) => (
+                    <span
+                      key={author}
+                      className="inline-flex items-center rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground"
+                    >
+                      {authorDict.get(author) ?? ""}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+
+          <div className="pt-4 border-t">
+            <p className="text-sm text-muted-foreground">
+              <span className="font-semibold">Course ID:</span> {course.id}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

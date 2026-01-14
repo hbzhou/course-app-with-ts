@@ -1,4 +1,4 @@
-import { AppDispatch } from "../store";
+import { AppDispatch } from "@/store/store";
 import { actions } from "./user.slice";
 
 export interface LoginRequest {
@@ -16,7 +16,7 @@ interface LoginResponse {
 }
 
 export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatch) => {
-  const response = await fetch("/login", {
+  const response = await fetch("/api/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatc
 export const logout =
   (token: string = "") =>
   async (dispatch: AppDispatch) => {
-    const response = await fetch("/logout", {
+    const response = await fetch("/api/logout", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

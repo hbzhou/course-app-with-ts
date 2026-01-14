@@ -1,16 +1,18 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
-import Title from "../../common/Title/Title";
+import { Button } from "@/common/Button/Button";
+import { Input } from "@/common/Input/Input";
+import { Label } from "@/common/Label/Label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, selectAuthors } from "../../store/store";
-import { createCourse } from "../../store/course/course.thunk";
-import { Course } from "../../types/course";
-import { Author } from "../../types/author";
+import { AppDispatch, selectAuthors } from "@/store/store";
+import { createCourse } from "@/store/course/course.thunk";
+import { Course } from "@/types/course";
+import { Author } from "@/types/author";
 
 const CreateCourse: React.FC = () => {
   const {
@@ -30,58 +32,82 @@ const CreateCourse: React.FC = () => {
   });
 
   return (
-    <main className='border-solid border-2 border-indigo-500 m-4'>
-      <Title>Create Course</Title>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='flex justify-between items-center m-4'>
-          <div>
-            <div>Title</div>
-            <Input className='h-8 border-amber-300 rounded-md' {...register("title", { required: true })} />
-            <div>{errors.title && <span className='mx-1 text-red-500'>Required</span>}</div>
-          </div>
-          <div>
-            <Button className='mr-4 w-40 border-2 border-solid p-1  border-purple-700'>Create Course</Button>
-          </div>
-        </div>
-        <div className='m-4'>
-          <div>Duration</div>
-          <Input
-            type='number'
-            className='h-8 border-amber-300 rounded-md'
-            {...register("duration", { required: true, valueAsNumber: true })}
-          />
-          <div>{errors.duration && <span className='mx-1 text-red-500'>Required</span>}</div>
-        </div>
-        <div className='m-4'>
-          <div>Authors</div>
-          <Controller
-            control={control}
-            defaultValue={[]}
-            name='authors'
-            rules={{ required: true }}
-            render={({ field: { onChange, value, ref } }) => (
-              <Select
-                ref={ref}
-                value={authorOptions.filter((c: { value: string; label: string }) => value.includes(c.value))}
-                onChange={(val) => onChange(val.map((c: { value: string; label: string }) => c.value))}
-                options={authorOptions}
-                isMulti
-                className='border-2 border-solid border-amber-300 w-1/2'
+    <main className="container mx-auto p-6 max-w-4xl">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-3xl">Create New Course</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="title">Course Title</Label>
+              <Input
+                id="title"
+                placeholder="Enter course title"
+                {...register("title", { required: true })}
               />
-            )}
-          />
-          <div>{errors.authors && <span className='mx-1 text-red-500'>Required</span>}</div>
-        </div>
-        <div className='m-4'>
-          <div>Description</div>
-          <textarea
-            rows={4}
-            className='block p-2.5 w-full rounded-md border-solid border-2 border-amber-300'
-            {...register("description", { required: true })}
-          ></textarea>
-          <div>{errors.description && <span className='mx-1 text-red-500'>Required</span>}</div>
-        </div>
-      </form>
+              {errors.title && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duration (hours)</Label>
+              <Input
+                id="duration"
+                type="number"
+                placeholder="Enter duration in hours"
+                {...register("duration", { required: true, valueAsNumber: true })}
+              />
+              {errors.duration && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="authors">Authors</Label>
+              <Controller
+                control={control}
+                defaultValue={[]}
+                name="authors"
+                rules={{ required: true }}
+                render={({ field: { onChange, value, ref } }) => (
+                  <Select
+                    ref={ref}
+                    value={authorOptions.filter((c: { value: string; label: string }) => value.includes(c.value))}
+                    onChange={(val) => onChange(val.map((c: { value: string; label: string }) => c.value))}
+                    options={authorOptions}
+                    isMulti
+                    className="react-select-container"
+                    classNamePrefix="react-select"
+                  />
+                )}
+              />
+              {errors.authors && <span className="text-sm text-destructive">Please select at least one author</span>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                rows={6}
+                placeholder="Enter course description"
+                {...register("description", { required: true })}
+              />
+              {errors.description && <span className="text-sm text-destructive">This field is required</span>}
+            </div>
+
+            <div className="flex justify-end gap-4 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => navigator("/courses")}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">
+                Create Course
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </main>
   );
 };

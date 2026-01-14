@@ -1,6 +1,7 @@
 import React, { createRef } from "react";
-import Button from "../../common/Button/Button";
-import Input from "../../common/Input/Input";
+import { Button } from "@/common/Button/Button";
+import { Input } from "@/common/Input/Input";
+import { Search } from "lucide-react";
 
 interface Props {
   handleSearch: (keyword: string) => void;
@@ -12,9 +13,15 @@ const SearchBar: React.FC<Props> = ({ handleSearch }) => {
     handleSearch(inputRef.current?.value ?? "");
   };
   return (
-    <div className="flex">
-      <Input ref={inputRef} placeholder="Enter Course Name" className=" border-orange-200" />
-      <Button className=" border-purple-500 mx-4 w-40 max-h-10" onClick={search}>
+    <div className="flex gap-2 flex-1 max-w-md">
+      <Input
+        ref={inputRef}
+        placeholder="Search courses..."
+        className="flex-1"
+        onKeyDown={(e) => e.key === "Enter" && search()}
+      />
+      <Button onClick={search} size="default">
+        <Search className="h-4 w-4 mr-2" />
         Search
       </Button>
     </div>

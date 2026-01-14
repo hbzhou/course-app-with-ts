@@ -1,38 +1,42 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../common/Button/Button";
-import "./Course.module.scss";
-import { Course } from "../../types/course";
+import { Button } from "@/common/Button/Button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Course } from "@/types/course";
+import { Clock, Calendar, Users } from "lucide-react";
 
 const CourseCard: React.FC<Course> = ({ id, title, description, duration, creationDate, authors }) => {
   const navigate = useNavigate();
 
   return (
-    <div className='flex justify-between items-center m-4 border-solid border-2 border-green-500'>
-      <div className='flex flex-col m-4 w-1/2 '>
-        <h1>{title}</h1>
-        <div>{description}</div>
-      </div>
-      <div className='flex flex-col justify-evenly flex-grow m-4 min-w-fit'>
-        <div className='m-2'>
-          <label>Authors:</label>
-          <span>{authors.join(",")}</span>
+    <Card className="hover:shadow-lg transition-shadow">
+      <CardHeader>
+        <CardTitle className="text-2xl">{title}</CardTitle>
+        <CardDescription className="line-clamp-3">{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Users className="h-4 w-4" />
+          <span className="font-medium">Authors:</span>
+          <span>{authors.join(", ")}</span>
         </div>
-        <div className='m-2'>
-          <label>Duration:</label>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Clock className="h-4 w-4" />
+          <span className="font-medium">Duration:</span>
           <span>{duration} hours</span>
         </div>
-        <div className='m-2'>
-          <label>Created:</label>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Calendar className="h-4 w-4" />
+          <span className="font-medium">Created:</span>
           <span>{creationDate}</span>
         </div>
-        <div className='m-2 text-center'>
-          <Button className=' border-purple-500 min-w-max w-52' onClick={() => navigate(`/courses/${id}`)}>
-            Show course
-          </Button>
-        </div>
-      </div>
-    </div>
+      </CardContent>
+      <CardFooter>
+        <Button className="w-full" onClick={() => navigate(`/courses/${id}`)}>
+          View Course
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 

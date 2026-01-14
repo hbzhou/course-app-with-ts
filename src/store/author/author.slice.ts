@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Author } from "../../types/author";
+import { Author } from "@/types/author";
 
 export type AuthorSliceState = Array<Author>;
 

@@ -1,6 +1,6 @@
-import { AppDispatch } from "../store";
-import { actions } from "./author.slice";
-import { Author } from "../../types/author";
+import { AppDispatch } from "@/store/store";
+import {actions} from "./author.slice";
+import { Author } from "@/types/author";
 
 interface QueryAllAuthorsResp {
   successful: boolean;
@@ -9,7 +9,7 @@ interface QueryAllAuthorsResp {
 
 export const fetchAuthors = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/authors/all", {
+  const response = await fetch("/api/authors/all", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
