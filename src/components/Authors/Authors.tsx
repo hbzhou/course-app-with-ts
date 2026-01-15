@@ -1,22 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/common/Button/Button";
 import Modal from "@/common/Modal/Modal";
-import AddAuthor from "./AddAuthor";
+import AddAuthor, { AddAuthorHandle, AddAuthorFormValues } from "./AddAuthor";
 import AuthorItem from "./AuthorItem";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import { AppDispatch, selectAuthors } from "@/store/store";
-import { fetchAuthors } from "@/store/author/author.thunk";
+import { createAuthor, fetchAuthors } from "@/store/author/author.thunk";
 
 const Authors = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const formRef = useRef<AddAuthorHandle>(null);
   const dispatch = useDispatch<AppDispatch>();
   const authors = useSelector(selectAuthors);
 
   useEffect(() => {
     dispatch(fetchAuthors());
   }, [dispatch]);
+
+  const handleModalClose = () => {
+    if (isSaving) return;
+    setShowModal(false);
+    setSubmitError(null);
+    formRef.current?.reset();
+  };
+
+  const handleSaveAuthor = () => {
+    formRef.current?.submit();
+  };
+
+  const handleAddAuthorSubmit = async (values: AddAuthorFormValues) => {
+    try {
+      setIsSaving(true);
+      setSubmitError(null);
+      await dispatch(createAuthor(values.name));
+      setIsSaving(false);
+      setShowModal(false);
+      formRef.current?.reset();
+    } catch (error) {
+      setIsSaving(false);
+      const message = error instanceof Error ? error.message : "Failed to save author";
+      setSubmitError(message);
+    }
+  };
 
   return (
     <div className="container mx-auto p-6 max-w-4xl">
@@ -44,10 +73,17 @@ const Authors = () => {
         <Modal
           title="Add Author"
           open={showModal}
-          handleClose={() => setShowModal(false)}
-          handleSave={() => setShowModal(false)}
+          handleClose={handleModalClose}
+          handleSave={handleSaveAuthor}
+          saving={isSaving}
+          disableSave={isSaving}
         >
-          <AddAuthor />
+          <AddAuthor
+            ref={formRef}
+            onSubmit={handleAddAuthorSubmit}
+            isSubmitting={isSaving}
+            submitError={submitError}
+          />
         </Modal>
       )}
     </div>

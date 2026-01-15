@@ -12,6 +12,9 @@ export const authorSlice = createSlice({
     setAuthors: (state: AuthorSliceState, action: PayloadAction<Array<Author>>) => {
       return [...action.payload];
     },
+    addAuthor: (state: AuthorSliceState, action: PayloadAction<Author>) => {
+      state.push(action.payload);
+    },
   },
 });
 

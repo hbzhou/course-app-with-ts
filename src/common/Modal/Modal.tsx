@@ -12,11 +12,23 @@ interface Props {
   title: string;
   children: React.ReactNode;
   handleClose: () => void;
-  handleSave: () => void;
+  handleSave?: () => void;
   open?: boolean;
+  saving?: boolean;
+  saveLabel?: string;
+  disableSave?: boolean;
 }
 
-const Modal: React.FC<Props> = ({ title, children, handleClose, handleSave, open = true }) => {
+const Modal: React.FC<Props> = ({
+  title,
+  children,
+  handleClose,
+  handleSave,
+  open = true,
+  saving = false,
+  saveLabel = "Save Changes",
+  disableSave = false,
+}) => {
   return (
     <Dialog open={open} onOpenChange={(isOpen) => !isOpen && handleClose()}>
       <DialogContent className="sm:max-w-[600px]">
@@ -25,12 +37,14 @@ const Modal: React.FC<Props> = ({ title, children, handleClose, handleSave, open
         </DialogHeader>
         <div className="py-4">{children}</div>
         <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
+          <Button variant="outline" onClick={handleClose} disabled={saving}>
             Close
           </Button>
-          <Button onClick={handleSave}>
-            Save Changes
-          </Button>
+          {handleSave && (
+            <Button onClick={handleSave} disabled={saving || disableSave}>
+              {saving ? "Saving..." : saveLabel}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -38,6 +52,3 @@ const Modal: React.FC<Props> = ({ title, children, handleClose, handleSave, open
 };
 
 export default Modal;
-
-
-
