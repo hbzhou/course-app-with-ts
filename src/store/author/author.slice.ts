@@ -15,6 +15,15 @@ export const authorSlice = createSlice({
     addAuthor: (state: AuthorSliceState, action: PayloadAction<Author>) => {
       state.push(action.payload);
     },
+    updateAuthor: (state: AuthorSliceState, action: PayloadAction<Author>) => {
+      const index = state.findIndex((author) => author.id === action.payload.id);
+      if (index !== -1) {
+        state[index] = action.payload;
+      }
+    },
+    removeAuthor: (state: AuthorSliceState, action: PayloadAction<string>) => {
+      return state.filter((author) => author.id !== action.payload);
+    },
   },
 });
 

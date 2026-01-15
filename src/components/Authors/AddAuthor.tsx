@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useImperativeHandle, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +19,7 @@ interface AddAuthorProps {
   onSubmit: (values: AddAuthorFormValues) => void | Promise<void>;
   isSubmitting?: boolean;
   submitError?: string | null;
+  initialValues?: Partial<AddAuthorFormValues>;
 }
 
 export type AddAuthorHandle = {
@@ -27,7 +28,7 @@ export type AddAuthorHandle = {
 };
 
 const AddAuthor = forwardRef<AddAuthorHandle, AddAuthorProps>(
-  ({ onSubmit, isSubmitting = false, submitError = null }, ref) => {
+  ({ onSubmit, isSubmitting = false, submitError = null, initialValues }, ref) => {
     const {
       register,
       handleSubmit,
@@ -35,16 +36,20 @@ const AddAuthor = forwardRef<AddAuthorHandle, AddAuthorProps>(
       formState: { errors },
     } = useForm<AddAuthorFormValues>({
       resolver: zodResolver(authorSchema),
-      defaultValues: { name: "" },
+      defaultValues: { name: initialValues?.name ?? "" },
     });
+
+    useEffect(() => {
+      reset({ name: initialValues?.name ?? "" });
+    }, [initialValues?.name, reset]);
 
     useImperativeHandle(
       ref,
       () => ({
         submit: () => handleSubmit(onSubmit)(),
-        reset: () => reset(),
+        reset: () => reset({ name: initialValues?.name ?? "" }),
       }),
-      [handleSubmit, onSubmit, reset]
+      [handleSubmit, onSubmit, reset, initialValues?.name]
     );
 
     return (
