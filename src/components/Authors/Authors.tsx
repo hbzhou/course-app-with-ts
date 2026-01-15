@@ -1,38 +1,22 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/common/Button/Button";
 import Modal from "@/common/Modal/Modal";
 import AddAuthor from "./AddAuthor";
 import AuthorItem from "./AuthorItem";
-import { Author } from "@/types/author";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-
-interface QueryAllAuthorsResp {
-  successful: boolean;
-  result: Author[];
-}
+import { AppDispatch, selectAuthors } from "@/store/store";
+import { fetchAuthors } from "@/store/author/author.thunk";
 
 const Authors = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [authors, setAuthors] = useState<Author[]>([]);
-
-  const getAuthorList = async () => {
-    const token = localStorage.getItem("token") ?? "";
-    const fetchResp = await fetch("/authors/all", {
-      method: "GET",
-      headers: {
-        Authorization: token,
-      },
-    });
-    const jsonResp: QueryAllAuthorsResp = await fetchResp.json();
-    if (jsonResp.successful) {
-      setAuthors(jsonResp.result);
-    }
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const authors = useSelector(selectAuthors);
 
   useEffect(() => {
-    getAuthorList();
-  }, []);
+    dispatch(fetchAuthors());
+  }, [dispatch]);
 
   return (
     <div className="container mx-auto p-6 max-w-4xl">
