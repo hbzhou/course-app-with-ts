@@ -12,7 +12,7 @@ const AuthorItem: React.FC<Author> = ({ name }) => {
           <Edit className="h-4 w-4 mr-1" />
           Edit
         </Button>
-        <Button variant="outline" size="sm">
+        <Button variant="destructive" size="sm">
           <Trash2 className="h-4 w-4 mr-1" />
           Remove
         </Button>
