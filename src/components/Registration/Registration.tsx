@@ -1,26 +1,29 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Button } from "@/common/Button/Button";
 import { Input } from "@/common/Input/Input";
 import { Label } from "@/common/Label/Label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
+import { AppDispatch } from "@/store/store";
+import { register as registerUser, RegisterRequest } from "@/store/user/user.thunk";
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<User>();
+  } = useForm<RegisterRequest>();
 
-  const onSubmit = (user: User) => {
-    console.log(user);
+  const onSubmit = async (user: RegisterRequest) => {
+    const result = await dispatch(registerUser(user));
+    // If backend marks success, send user to login to sign in
+    if ((result as any)?.successful ?? true) {
+      navigate("/login");
+    }
   };
 
   return (

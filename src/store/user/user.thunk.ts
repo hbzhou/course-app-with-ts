@@ -6,7 +6,13 @@ export interface LoginRequest {
   password: string;
 }
 
-interface LoginResponse {
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface AuthResponse {
   successful: boolean;
   result: string;
   user: {
@@ -14,6 +20,20 @@ interface LoginResponse {
     email: string;
   };
 }
+
+const persistAuth = (dispatch: AppDispatch, authResponse: AuthResponse) => {
+  if (authResponse.successful) {
+    localStorage.setItem("token", authResponse.result);
+    const user = authResponse.user;
+    dispatch(
+      actions.login({
+        username: user.name,
+        email: user.email,
+        token: authResponse.result,
+      })
+    );
+  }
+};
 
 export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatch) => {
   const response = await fetch("/api/login", {
@@ -23,18 +43,23 @@ export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatc
     },
     body: JSON.stringify(loginRequest),
   });
-  const loginResponse: LoginResponse = await response.json();
-  if (loginResponse.successful) {
-    localStorage.setItem("token", loginResponse.result);
-    const user = loginResponse.user;
-    dispatch(
-      actions.login({
-        username: user.name,
-        email: user.email,
-        token: loginResponse.result,
-      })
-    );
+  const loginResponse: AuthResponse = await response.json();
+  persistAuth(dispatch, loginResponse);
+};
+
+export const register = (registerRequest: RegisterRequest) => async (_dispatch: AppDispatch) => {
+  const response = await fetch("/api/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(registerRequest),
+  });
+  const registerResponse: AuthResponse = await response.json();
+  if (!registerResponse.successful) {
+    alert("Registration failed, please try again.");
   }
+  return registerResponse;
 };
 
 export const logout =
