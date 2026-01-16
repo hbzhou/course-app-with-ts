@@ -14,11 +14,21 @@ export const userSlice = createSlice({
     login: (_: UserSliceState, action: PayloadAction<User>) => {
       return { ...action.payload };
     },
-    logout: (_: UserSliceState, action: PayloadAction) => {
+    logout: (_: UserSliceState, _action: PayloadAction) => {
       return {};
+    },
+    rehydrateFromStorage: (state: UserSliceState) => {
+      const token = localStorage.getItem("token") ?? "";
+      if (token) {
+        return { ...state, token };
+      }
+      return state;
     },
   },
 });
 
 export const actions = userSlice.actions;
+
+export const selectIsAuthed = (state: UserSliceState) => Boolean(state.token);
+
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/common/Button/Button";
 import { Input } from "@/common/Input/Input";
 import { Label } from "@/common/Label/Label";
@@ -10,15 +10,18 @@ import { login, LoginRequest } from "@/store/user/user.thunk";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequest>();
-  const onSubmit = (request: LoginRequest) => {
-    dispatch(login(request));
-    navigate("/courses");
+
+  const onSubmit = async (request: LoginRequest) => {
+    await dispatch(login(request));
+    const fromPath = (location.state as any)?.from?.pathname as string | undefined;
+    navigate(fromPath ?? "/courses", { replace: true });
   };
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-200px)] p-4">

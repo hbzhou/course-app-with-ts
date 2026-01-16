@@ -76,6 +76,7 @@ export const logout =
       const result = await response.json();
       alert(result.message);
     } else {
+      localStorage.removeItem("token");
       dispatch(actions.logout());
     }
   };
