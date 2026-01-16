@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { selectAuthors, selectCourses } from "@/store/store";
 import { Course } from "@/types/course";
 import { Author } from "@/types/author";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/common/Button/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/common/Card";
+import { Button } from "@/common/Button";
 import { Clock, Calendar, Users, ArrowLeft } from "lucide-react";
 
 const CourseInfo: React.FC = () => {

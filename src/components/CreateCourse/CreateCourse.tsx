@@ -1,10 +1,10 @@
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import { Button } from "@/common/Button/Button";
-import { Input } from "@/common/Input/Input";
-import { Label } from "@/common/Label/Label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/common/Button";
+import { Input } from "@/common/Input";
+import { Label } from "@/common/Label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/common/Card";
+import { Textarea } from "@/common/Textarea";
 
 import React from "react";
 import { useNavigate } from "react-router-dom";

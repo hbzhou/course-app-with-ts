@@ -2,8 +2,8 @@ import { forwardRef, useImperativeHandle, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/common/Input/Input";
-import { Label } from "@/common/Label/Label";
+import { Input } from "@/common/Input";
+import { Label } from "@/common/Label";
 
 const authorSchema = z.object({
   name: z

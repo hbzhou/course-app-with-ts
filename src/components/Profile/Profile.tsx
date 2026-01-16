@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/common/Button/Button";
+import { Button } from "@/common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, selectCurrentUser } from "@/store/store";
 import { logout } from "@/store/user/user.thunk";

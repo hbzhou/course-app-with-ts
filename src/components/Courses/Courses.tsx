@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
+import { Button } from "@/common/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
 import { AppDispatch, selectAuthors, selectCourses } from "@/store/store";

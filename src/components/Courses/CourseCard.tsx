@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/common/Button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { Course } from "@/types/course";
 import { Clock, Calendar, Users } from "lucide-react";
 

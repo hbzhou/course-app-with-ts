@@ -2,10 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Button } from "@/common/Button/Button";
-import { Input } from "@/common/Input/Input";
-import { Label } from "@/common/Label/Label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/common/Button";
+import { Input } from "@/common/Input";
+import { Label } from "@/common/Label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { AppDispatch } from "@/store/store";
 import { register as registerUser, RegisterRequest } from "@/store/user/user.thunk";
 

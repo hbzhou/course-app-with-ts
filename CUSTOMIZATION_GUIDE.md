@@ -76,7 +76,7 @@ Usage:
 
 ### Card Styles
 
-Customize card appearance in `src/components/ui/card.tsx`:
+Customize card appearance in `src/components/ui/Card.tsx`:
 
 ```tsx
 // Add elevated variant
@@ -98,7 +98,7 @@ const Card = React.forwardRef<
 
 ### Input Sizes
 
-Add size variants to inputs in `src/components/ui/input.tsx`:
+Add size variants to inputs in `src/components/ui/Input.tsx`:
 
 ```tsx
 export interface InputProps

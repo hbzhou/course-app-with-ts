@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@/common/Button/Button";
-import Modal from "@/common/Modal/Modal";
+import { Button } from "@/common/Button";
+import Modal from "@/common/Modal";
 import AddAuthor, { AddAuthorHandle, AddAuthorFormValues } from "./AddAuthor";
 import AuthorItem from "./AuthorItem";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/common/Card";
 import { Plus } from "lucide-react";
 import { AppDispatch, selectAuthors } from "@/store/store";
 import { createAuthor, deleteAuthor, fetchAuthors, updateAuthor } from "@/store/author/author.thunk";

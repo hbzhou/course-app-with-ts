@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
-import { Input } from "@/common/Input/Input";
-import { Label } from "@/common/Label/Label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/common/Button";
+import { Input } from "@/common/Input";
+import { Label } from "@/common/Label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { AppDispatch } from "@/store/store";
 import { login, LoginRequest } from "@/store/user/user.thunk";
 

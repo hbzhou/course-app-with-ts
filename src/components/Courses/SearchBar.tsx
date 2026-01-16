@@ -1,6 +1,6 @@
 import React, { createRef } from "react";
-import { Button } from "@/common/Button/Button";
-import { Input } from "@/common/Input/Input";
+import { Button } from "@/common/Button";
+import { Input } from "@/common/Input";
 import { Search } from "lucide-react";
 
 interface Props {

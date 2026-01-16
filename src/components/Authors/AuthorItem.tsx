@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/common/Button/Button";
+import { Button } from "@/common/Button";
 import { Author } from "@/types/author";
 import { Edit, Trash2 } from "lucide-react";
 

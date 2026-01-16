@@ -5,8 +5,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+} from "@/common/Dialog";
+import { Button } from "@/common/Button";
 
 interface Props {
   title: string;
@@ -27,7 +27,7 @@ const Modal: React.FC<Props> = ({
   handleSave,
   open = true,
   saving = false,
-  saveLabel = "Save Changes",
+  saveLabel = "Save",
   disableSave = false,
   showFooter = true,
 }) => {
