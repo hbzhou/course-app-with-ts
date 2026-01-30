@@ -2,7 +2,7 @@ import { AppDispatch } from "@/store/store";
 import { actions } from "./user.slice";
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -36,7 +36,7 @@ const persistAuth = (dispatch: AppDispatch, authResponse: AuthResponse) => {
 };
 
 export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatch) => {
-  const response = await fetch("/api/login", {
+  const response = await fetch("/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatc
 };
 
 export const register = (registerRequest: RegisterRequest) => async (_dispatch: AppDispatch) => {
-  const response = await fetch("/api/register", {
+  const response = await fetch("/api/auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const register = (registerRequest: RegisterRequest) => async (_dispatch: 
 export const logout =
   (token: string = "") =>
   async (dispatch: AppDispatch) => {
-    const response = await fetch("/api/logout", {
+    const response = await fetch("/api/auth/logout", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -33,14 +33,14 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="Enter email"
-                {...register("email", { required: true })}
+                id="username"
+                type="text"
+                placeholder="Enter username"
+                {...register("username", { required: true })}
               />
-              {errors.email && <span className="text-sm text-destructive">This field is required</span>}
+              {errors.username && <span className="text-sm text-destructive">This field is required</span>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
