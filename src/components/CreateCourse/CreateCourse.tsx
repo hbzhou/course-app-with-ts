@@ -5,6 +5,7 @@ import { Input } from "@/common/Input";
 import { Label } from "@/common/Label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/common/Card";
 import { Textarea } from "@/common/Textarea";
+import moment from "moment";
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +24,19 @@ const CreateCourse: React.FC = () => {
   } = useForm<Course>();
   const dispatch = useDispatch<AppDispatch>();
   const navigator = useNavigate();
+  const authors = useSelector(selectAuthors);
+
   const onSubmit: SubmitHandler<Course> = (data) => {
-    dispatch(createCourse(data));
+    const creationDate = moment().format('MM/DD/YYYY');
+    const courseData = {
+      ...data,
+      creationDate,
+      authors: (data.authors as unknown as string[]).map((authorId: string) => {
+        const author = authors.find((a: Author) => a.id === authorId);
+        return author || { id: authorId, name: '' };
+      })
+    };
+    dispatch(createCourse(courseData));
     navigator("/courses");
   };
   const authorOptions = useSelector(selectAuthors).map((author: Author) => {
