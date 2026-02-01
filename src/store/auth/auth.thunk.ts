@@ -13,8 +13,7 @@ export interface RegisterRequest {
 }
 
 interface AuthResponse {
-  successful: boolean;
-  result: string;
+  token: string;
   user: {
     name: string;
     email: string;
@@ -22,17 +21,15 @@ interface AuthResponse {
 }
 
 const persistAuth = (dispatch: AppDispatch, authResponse: AuthResponse) => {
-  if (authResponse.successful) {
-    localStorage.setItem("token", authResponse.result);
-    const user = authResponse.user;
-    dispatch(
-      actions.login({
-        username: user.name,
-        email: user.email,
-        token: authResponse.result,
-      })
-    );
-  }
+  localStorage.setItem("token", authResponse.token);
+  const user = authResponse.user;
+  dispatch(
+    actions.login({
+      username: user.name,
+      email: user.email,
+      token: authResponse.token,
+    })
+  );
 };
 
 export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatch) => {
@@ -43,6 +40,12 @@ export const login = (loginRequest: LoginRequest) => async (dispatch: AppDispatc
     },
     body: JSON.stringify(loginRequest),
   });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || `Failed to login: ${response.status} ${response.statusText}`);
+  }
+
   const loginResponse: AuthResponse = await response.json();
   persistAuth(dispatch, loginResponse);
 };
@@ -55,10 +58,13 @@ export const register = (registerRequest: RegisterRequest) => async (_dispatch: 
     },
     body: JSON.stringify(registerRequest),
   });
-  const registerResponse: AuthResponse = await response.json();
-  if (!registerResponse.successful) {
-    alert("Registration failed, please try again.");
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || `Failed to register: ${response.status} ${response.statusText}`);
   }
+
+  const registerResponse: AuthResponse = await response.json();
   return registerResponse;
 };
 
@@ -72,11 +78,12 @@ export const logout =
         Authorization: `Bearer ${token}`,
       },
     });
+
     if (!response.ok) {
-      const result = await response.json();
-      alert(result.message);
-    } else {
-      localStorage.removeItem("token");
-      dispatch(actions.logout());
+      const error = await response.json().catch(() => ({ message: response.statusText }));
+      throw new Error(error.message || `Failed to logout: ${response.status} ${response.statusText}`);
     }
+
+    localStorage.removeItem("token");
+    dispatch(actions.logout());
   };

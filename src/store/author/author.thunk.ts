@@ -2,47 +2,27 @@ import { AppDispatch } from "@/store/store";
 import { actions } from "./author.slice";
 import { Author } from "@/types/author";
 
-interface QueryAllAuthorsResp {
-  successful: boolean;
-  result: Author[];
-}
-
-interface CreateAuthorResp {
-  successful: boolean;
-  result?: Author;
-  error?: string;
-}
-
-interface UpdateAuthorResp {
-  successful: boolean;
-  result?: Author;
-  error?: string;
-}
-
-interface DeleteAuthorResp {
-  successful: boolean;
-  result?: string;
-  error?: string;
-}
-
 export const fetchAuthors = () => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/api/authors/all", {
+  const response = await fetch("/api/authors", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
-  const queryAllAuthorsResp: QueryAllAuthorsResp = await response.json();
-  if (queryAllAuthorsResp.successful) {
-    dispatch(actions.setAuthors(queryAllAuthorsResp.result));
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch authors: ${response.status} ${response.statusText}`);
   }
+
+  const authors: Author[] = await response.json();
+  dispatch(actions.setAuthors(authors));
 };
 
 export const createAuthor = (name: string) => async (dispatch: AppDispatch) => {
   const token = localStorage.getItem("token") ?? "";
-  const response = await fetch("/api/authors/add", {
+  const response = await fetch("/api/authors", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,12 +30,15 @@ export const createAuthor = (name: string) => async (dispatch: AppDispatch) => {
     },
     body: JSON.stringify({ name }),
   });
-  const createAuthorResp: CreateAuthorResp = await response.json();
-  if (createAuthorResp.successful && createAuthorResp.result) {
-    dispatch(actions.addAuthor(createAuthorResp.result));
-    return createAuthorResp.result;
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || `Failed to create author: ${response.status} ${response.statusText}`);
   }
-  throw new Error(createAuthorResp.error || "Failed to create author");
+
+  const createdAuthor: Author = await response.json();
+  dispatch(actions.addAuthor(createdAuthor));
+  return createdAuthor;
 };
 
 export const updateAuthor = (author: Author) => async (dispatch: AppDispatch) => {
@@ -68,12 +51,15 @@ export const updateAuthor = (author: Author) => async (dispatch: AppDispatch) =>
     },
     body: JSON.stringify({ name: author.name }),
   });
-  const updateAuthorResp: UpdateAuthorResp = await response.json();
-  if (updateAuthorResp.successful && updateAuthorResp.result) {
-    dispatch(actions.updateAuthor(updateAuthorResp.result));
-    return updateAuthorResp.result;
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || `Failed to update author: ${response.status} ${response.statusText}`);
   }
-  throw new Error(updateAuthorResp.error || "Failed to update author");
+
+  const updatedAuthor: Author = await response.json();
+  dispatch(actions.updateAuthor(updatedAuthor));
+  return updatedAuthor;
 };
 
 export const deleteAuthor = (authorId: string) => async (dispatch: AppDispatch) => {
@@ -85,10 +71,12 @@ export const deleteAuthor = (authorId: string) => async (dispatch: AppDispatch) 
       Authorization: `Bearer ${token}`,
     },
   });
-  const deleteAuthorResp: DeleteAuthorResp = await response.json();
-  if (deleteAuthorResp.successful) {
-    dispatch(actions.removeAuthor(authorId));
-    return authorId;
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: response.statusText }));
+    throw new Error(error.message || `Failed to delete author: ${response.status} ${response.statusText}`);
   }
-  throw new Error(deleteAuthorResp.error || "Failed to delete author");
+
+  dispatch(actions.removeAuthor(authorId));
+  return authorId;
 };
