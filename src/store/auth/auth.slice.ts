@@ -18,7 +18,7 @@ export const authSlice = createSlice({
       return {};
     },
     rehydrateFromStorage: (state: AuthSliceState) => {
-      const token = localStorage.getItem("token") ?? "";
+      const token = localStorage.getItem("token");
       if (token) {
         return { ...state, token };
       }

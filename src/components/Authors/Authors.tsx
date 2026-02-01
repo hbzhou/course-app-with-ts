@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
 import { Button } from "@/common/Button";
 import Modal from "@/common/Modal";
 import AddAuthor, { AddAuthorHandle, AddAuthorFormValues } from "./AddAuthor";
 import AuthorItem from "./AuthorItem";
 import { Card, CardContent, CardHeader, CardTitle } from "@/common/Card";
 import { Plus } from "lucide-react";
-import { AppDispatch, selectAuthors } from "@/store/store";
-import { createAuthor, deleteAuthor, fetchAuthors, updateAuthor } from "@/store/author/author.thunk";
+import { useAuthors, useCreateAuthor, useUpdateAuthor, useDeleteAuthor } from "@/hooks/useAuthors";
 import { Author } from "@/types/author";
 
 const Authors = () => {
@@ -15,16 +13,16 @@ const Authors = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [modalMode, setModalMode] = useState<"add" | "edit">("add");
   const [activeAuthor, setActiveAuthor] = useState<Author | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isRemoving, setIsRemoving] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const formRef = useRef<AddAuthorHandle>(null);
-  const dispatch = useDispatch<AppDispatch>();
-  const authors = useSelector(selectAuthors);
 
-  useEffect(() => {
-    dispatch(fetchAuthors());
-  }, [dispatch]);
+  const { data: authors = [], isLoading, error } = useAuthors();
+  const createAuthorMutation = useCreateAuthor();
+  const updateAuthorMutation = useUpdateAuthor();
+  const deleteAuthorMutation = useDeleteAuthor();
+
+  const isSaving = createAuthorMutation.isPending || updateAuthorMutation.isPending;
+  const isRemoving = deleteAuthorMutation.isPending ? activeAuthor?.id ?? null : null;
 
   const resetModalState = () => {
     setShowModal(false);
@@ -62,17 +60,14 @@ const Authors = () => {
 
   const handleAddAuthorSubmit = async (values: AddAuthorFormValues) => {
     try {
-      setIsSaving(true);
       setSubmitError(null);
       if (modalMode === "add") {
-        await dispatch(createAuthor(values.name));
+        await createAuthorMutation.mutateAsync(values.name);
       } else if (activeAuthor) {
-        await dispatch(updateAuthor({ ...activeAuthor, name: values.name }));
+        await updateAuthorMutation.mutateAsync({ ...activeAuthor, name: values.name });
       }
-      setIsSaving(false);
       resetModalState();
     } catch (error) {
-      setIsSaving(false);
       const message = error instanceof Error ? error.message : "Failed to save author";
       setSubmitError(message);
     }
@@ -81,13 +76,10 @@ const Authors = () => {
   const confirmDeleteAuthor = async () => {
     if (!activeAuthor) return;
     try {
-      setIsRemoving(activeAuthor.id);
-      await dispatch(deleteAuthor(activeAuthor.id));
-      setIsRemoving(null);
+      await deleteAuthorMutation.mutateAsync(activeAuthor.id);
       setShowDeleteModal(false);
       setActiveAuthor(null);
     } catch (error) {
-      setIsRemoving(null);
       const message = error instanceof Error ? error.message : "Failed to remove author";
       setSubmitError(message);
       setShowDeleteModal(false);
@@ -107,7 +99,15 @@ const Authors = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-3">
-          {authors.length > 0 ? (
+          {isLoading ? (
+            <div className="text-center py-12 text-muted-foreground">
+              Loading authors...
+            </div>
+          ) : error ? (
+            <div className="text-center py-12 text-destructive">
+              Error loading authors: {error.message}
+            </div>
+          ) : authors.length > 0 ? (
             authors.map((author) => (
               <AuthorItem
                 key={author.id}

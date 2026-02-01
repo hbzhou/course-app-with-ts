@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectAuthors, selectCourses } from "@/store/store";
+import { useCourses } from "@/hooks/useCourses";
 import { Course } from "@/types/course";
 import { Author } from "@/types/author";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/common/Card";
@@ -11,7 +10,32 @@ import { Clock, Calendar, Users, ArrowLeft } from "lucide-react";
 const CourseInfo: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const course = useSelector(selectCourses).find((course: Course) => course.id === id);
+  const { data: courses = [], isLoading, error } = useCourses();
+  const course = courses.find((course: Course) => course.id === id);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardContent className="py-12 text-center">
+            <p className="text-muted-foreground">Loading course...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-6">
+        <Card>
+          <CardContent className="py-12 text-center">
+            <p className="text-destructive">Error loading course: {error.message}</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (!course) {
     return (
