@@ -28,11 +28,11 @@ Successfully integrated shadcn/ui components (built on Radix UI primitives) into
 All components are in `src/components/ui/`:
 
 1. **button.tsx** - Versatile button with variants (default, destructive, outline, secondary, ghost, link) and sizes
-2. **input.tsx** - Accessible input field with focus states
-3. **label.tsx** - Form label with proper accessibility
-4. **dialog.tsx** - Modal/Dialog component with overlay, header, footer, and animation
-5. **card.tsx** - Card container with header, content, footer sections
-6. **textarea.tsx** - Multi-line text input
+2. **Input.tsx** - Accessible input field with focus states
+3. **Label.tsx** - Form label with proper accessibility
+4. **Dialog.tsx** - Modal/Dialog component with overlay, header, footer, and animation
+5. **Card.tsx** - Card container with header, content, footer sections
+6. **Textarea.tsx** - Multi-line text input
 
 ### 3. Common Components Updated ✅
 Replaced custom implementations with shadcn exports:

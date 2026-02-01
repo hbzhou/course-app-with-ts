@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Authors from "@/components/Authors/Authors";
 import CourseInfo from "@/components/CourseInfo/CourseInfo";
@@ -7,24 +7,73 @@ import CreateCourse from "@/components/CreateCourse/CreateCourse";
 import Header from "@/components/Header/Header";
 import Login from "@/components/Login/Login";
 import Registration from "@/components/Registration/Registration";
-import { Provider } from "react-redux";
+import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "@/store/store";
+import { actions } from "@/store/auth/auth.slice";
+
+const AuthBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.rehydrateFromStorage());
+  }, [dispatch]);
+
+  return children;
+};
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Courses />} />
-          <Route path='/courses' element={<Courses />} />
-          <Route path='/courses/:id' element={<CourseInfo />} />
-          <Route path='/authors' element={<Authors />} />
-          <Route path='/courses/add' element={<CreateCourse />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Registration />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthBootstrap>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <ProtectedRoute>
+                  <Courses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/courses'
+              element={
+                <ProtectedRoute>
+                  <Courses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/courses/:id'
+              element={
+                <ProtectedRoute>
+                  <CourseInfo />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/authors'
+              element={
+                <ProtectedRoute>
+                  <Authors />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/courses/add'
+              element={
+                <ProtectedRoute>
+                  <CreateCourse />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Registration />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthBootstrap>
     </Provider>
   );
 };

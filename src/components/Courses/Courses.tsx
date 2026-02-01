@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
+import { Button } from "@/common/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
 import { AppDispatch, selectAuthors, selectCourses } from "@/store/store";
@@ -27,13 +27,7 @@ const Courses: React.FC = () => {
     dispatch(fetchCourses());
   }, [dispatch]);
 
-  const filteredCourses = courses
-    .filter((course: Course) => course.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
-    .map((course: Course) => ({
-      ...course,
-      authors: course.authors.map((key: string) => authorDict.get(key) ?? "")
-    }));
-
+  const filteredCourses = courses.filter((course: Course) => course.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
   return (
     <main className="container mx-auto p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">

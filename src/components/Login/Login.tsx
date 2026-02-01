@@ -1,24 +1,27 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
-import { Input } from "@/common/Input/Input";
-import { Label } from "@/common/Label/Label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@/common/Button";
+import { Input } from "@/common/Input";
+import { Label } from "@/common/Label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { AppDispatch } from "@/store/store";
-import { login, LoginRequest } from "@/store/user/user.thunk";
+import { login, LoginRequest } from "@/store/auth/auth.thunk";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequest>();
-  const onSubmit = (request: LoginRequest) => {
-    dispatch(login(request));
-    navigate("/courses");
+
+  const onSubmit = async (request: LoginRequest) => {
+    await dispatch(login(request));
+    const fromPath = (location.state as any)?.from?.pathname as string | undefined;
+    navigate(fromPath ?? "/courses", { replace: true });
   };
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-200px)] p-4">
@@ -30,14 +33,14 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="Enter email"
-                {...register("email", { required: true })}
+                id="username"
+                type="text"
+                placeholder="Enter username"
+                {...register("username", { required: true })}
               />
-              {errors.email && <span className="text-sm text-destructive">This field is required</span>}
+              {errors.username && <span className="text-sm text-destructive">This field is required</span>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>

@@ -4,16 +4,14 @@ import { useSelector } from "react-redux";
 import { selectAuthors, selectCourses } from "@/store/store";
 import { Course } from "@/types/course";
 import { Author } from "@/types/author";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/common/Button/Button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/common/Card";
+import { Button } from "@/common/Button";
 import { Clock, Calendar, Users, ArrowLeft } from "lucide-react";
 
 const CourseInfo: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const course = useSelector(selectCourses).find((course: Course) => course.id === id);
-  const authors = useSelector(selectAuthors);
-  const authorDict = new Map(authors.map((author: Author) => [author.id, author.name]));
 
   if (!course) {
     return (
@@ -68,12 +66,12 @@ const CourseInfo: React.FC = () => {
               <div className="flex-1">
                 <p className="font-semibold mb-2">Authors</p>
                 <div className="flex flex-wrap gap-2">
-                  {course.authors.map((author: string) => (
+                  {course.authors.map((author: Author) => (
                     <span
-                      key={author}
+                      key={author.id}
                       className="inline-flex items-center rounded-full bg-secondary px-3 py-1 text-sm font-medium text-secondary-foreground"
                     >
-                      {authorDict.get(author) ?? ""}
+                      {author.name}
                     </span>
                   ))}
                 </div>

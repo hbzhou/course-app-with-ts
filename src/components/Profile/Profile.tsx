@@ -1,14 +1,14 @@
 import React from "react";
-import { Button } from "@/common/Button/Button";
+import { Button } from "@/common/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, selectCurrentUser } from "@/store/store";
-import { logout } from "@/store/user/user.thunk";
+import { logout } from "@/store/auth/auth.thunk";
 import { useNavigate } from "react-router-dom";
-import { UserSliceState } from "@/store/user/user.slice";
+import { AuthSliceState } from "@/store/auth/auth.slice";
 import { LogOut, User } from "lucide-react";
 
 const Profile: React.FC = () => {
-  const currentUser = useSelector(selectCurrentUser) as UserSliceState;
+  const currentUser = useSelector(selectCurrentUser) as AuthSliceState;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const handleOnClick = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/common/Button/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/common/Button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { Course } from "@/types/course";
 import { Clock, Calendar, Users } from "lucide-react";
 
@@ -18,7 +18,7 @@ const CourseCard: React.FC<Course> = ({ id, title, description, duration, creati
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Users className="h-4 w-4" />
           <span className="font-medium">Authors:</span>
-          <span>{authors.join(", ")}</span>
+          <span>{authors.map((author)=> author.name).join(", ")}</span>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Clock className="h-4 w-4" />
