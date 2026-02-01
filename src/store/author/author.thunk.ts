@@ -31,7 +31,7 @@ export const fetchAuthors = () => async (dispatch: AppDispatch) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   const queryAllAuthorsResp: QueryAllAuthorsResp = await response.json();
@@ -46,7 +46,7 @@ export const createAuthor = (name: string) => async (dispatch: AppDispatch) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name }),
   });
@@ -64,7 +64,7 @@ export const updateAuthor = (author: Author) => async (dispatch: AppDispatch) =>
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name: author.name }),
   });
@@ -82,7 +82,7 @@ export const deleteAuthor = (authorId: string) => async (dispatch: AppDispatch) 
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   const deleteAuthorResp: DeleteAuthorResp = await response.json();

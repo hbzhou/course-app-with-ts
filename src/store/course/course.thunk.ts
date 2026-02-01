@@ -13,7 +13,7 @@ export const fetchCourses = () => async (dispatch: AppDispatch) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   const queryAllCoursesResponse: QueryAllCoursesResponse = await response.json();
@@ -29,7 +29,7 @@ export const createCourse = (course: Course) => async (dispatch: AppDispatch) =>
     body: JSON.stringify(course),
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
   });
   const data = await response.json();
