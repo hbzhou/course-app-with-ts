@@ -2,19 +2,19 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import courseReducer, { CourseSliceState } from "./course/course.slice";
 import authorReducer, { AuthorSliceState } from "./author/author.slice";
-import userReducer, { UserSliceState } from "./user/user.slice";
+import authReducer, { AuthSliceState } from "./auth/auth.slice";
 
 export interface AppState {
   courses: CourseSliceState;
   authors: AuthorSliceState;
-  currentUser: UserSliceState;
+  currentUser: AuthSliceState;
 }
 
 export const store = configureStore({
   reducer: {
     courses: courseReducer,
     authors: authorReducer,
-    currentUser: userReducer,
+    currentUser: authReducer,
   },
 });
 

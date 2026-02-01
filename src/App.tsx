@@ -10,7 +10,7 @@ import Registration from "@/components/Registration/Registration";
 import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "@/store/store";
-import { actions } from "@/store/user/user.slice";
+import { actions } from "@/store/auth/auth.slice";
 
 const AuthBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const dispatch = useDispatch();

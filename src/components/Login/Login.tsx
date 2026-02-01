@@ -6,7 +6,7 @@ import { Input } from "@/common/Input";
 import { Label } from "@/common/Label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { AppDispatch } from "@/store/store";
-import { login, LoginRequest } from "@/store/user/user.thunk";
+import { login, LoginRequest } from "@/store/auth/auth.thunk";
 
 const Login = () => {
   const navigate = useNavigate();

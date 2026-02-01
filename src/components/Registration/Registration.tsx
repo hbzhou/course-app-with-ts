@@ -7,7 +7,7 @@ import { Input } from "@/common/Input";
 import { Label } from "@/common/Label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/common/Card";
 import { AppDispatch } from "@/store/store";
-import { register as registerUser, RegisterRequest } from "@/store/user/user.thunk";
+import { register as registerUser, RegisterRequest } from "@/store/auth/auth.thunk";
 
 const Registration = () => {
   const navigate = useNavigate();

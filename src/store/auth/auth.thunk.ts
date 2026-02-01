@@ -1,5 +1,5 @@
 import { AppDispatch } from "@/store/store";
-import { actions } from "./user.slice";
+import { actions } from "./auth.slice";
 
 export interface LoginRequest {
   username: string;
