@@ -28,13 +28,11 @@ export const apiClient = async <T>(
     );
   }
 
-  // Handle empty responses (204 No Content, or DELETE responses)
   const contentType = response.headers.get("content-type");
   if (!contentType || !contentType.includes("application/json")) {
     return undefined as T;
   }
 
-  // Check if response has content
   const text = await response.text();
   return text ? JSON.parse(text) : undefined as T;
 };

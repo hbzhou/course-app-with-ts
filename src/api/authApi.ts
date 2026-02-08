@@ -17,7 +17,6 @@ export interface AuthResponse {
     name: string;
     email: string;
   };
-  successful?: boolean;
 }
 
 export const authApi = {
