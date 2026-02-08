@@ -1,22 +1,30 @@
 import React from "react";
 import { Button } from "@/common/Button";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, selectCurrentUser } from "@/store/store";
-import { logout } from "@/store/auth/auth.thunk";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "@/store/store";
+import { useLogout } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { AuthSliceState } from "@/store/auth/auth.slice";
 import { LogOut, User } from "lucide-react";
 
 const Profile: React.FC = () => {
   const currentUser = useSelector(selectCurrentUser) as AuthSliceState;
-  const dispatch = useDispatch<AppDispatch>();
+  const logoutMutation = useLogout();
   const navigate = useNavigate();
-  const handleOnClick = () => {
+
+  const handleOnClick = async () => {
     if (currentUser.token) {
-      dispatch(logout(currentUser.token));
-      navigate("/login");
+      try {
+        await logoutMutation.mutateAsync(currentUser.token);
+        navigate("/login");
+      } catch (error) {
+        // Even if logout fails on server, still navigate to login
+        console.error("Logout error:", error);
+        navigate("/login");
+      }
     }
   };
+
   if (!currentUser.token) return <span />;
   return (
     <div className="flex items-center gap-3">
@@ -24,9 +32,9 @@ const Profile: React.FC = () => {
         <User className="h-4 w-4 text-muted-foreground" />
         <span className="font-medium">{currentUser.username}</span>
       </div>
-      <Button variant="outline" onClick={handleOnClick}>
+      <Button variant="outline" onClick={handleOnClick} disabled={logoutMutation.isPending}>
         <LogOut className="h-4 w-4 mr-2" />
-        Logout
+        {logoutMutation.isPending ? "Logging out..." : "Logout"}
       </Button>
     </div>
   );

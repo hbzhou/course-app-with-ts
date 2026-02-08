@@ -1,33 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/common/Button";
 import CourseCard from "./CourseCard";
 import SearchBar from "./SearchBar";
-import { AppDispatch, selectAuthors, selectCourses } from "@/store/store";
-import { fetchCourses } from "@/store/course/course.thunk";
-import { fetchAuthors } from "@/store/author/author.thunk";
+import { useCourses } from "@/hooks/useCourses";
+import { useAuthors } from "@/hooks/useAuthors";
 import { Course } from "@/types/course";
-import { Author } from "@/types/author";
 
 const Courses: React.FC = () => {
   const [keyword, setKeyword] = useState<string>("");
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const courses = useSelector(selectCourses);
-  const authors = useSelector(selectAuthors);
-  const authorDict = new Map(authors.map((author: Author) => [author.id, author.name]));
+  const { data: courses = [], isLoading: coursesLoading, error: coursesError } = useCourses();
+  const { isLoading: authorsLoading } = useAuthors();
 
   const handleSearch = (keyword: string) => {
     setKeyword(keyword);
   };
 
-  useEffect(() => {
-    dispatch(fetchAuthors());
-    dispatch(fetchCourses());
-  }, [dispatch]);
-
   const filteredCourses = courses.filter((course: Course) => course.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1);
+
+  if (coursesLoading || authorsLoading) {
+    return (
+      <main className="container mx-auto p-6">
+        <div className="text-center py-12 text-muted-foreground">
+          Loading courses...
+        </div>
+      </main>
+    );
+  }
+
+  if (coursesError) {
+    return (
+      <main className="container mx-auto p-6">
+        <div className="text-center py-12 text-destructive">
+          Error loading courses: {coursesError.message}
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="container mx-auto p-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">

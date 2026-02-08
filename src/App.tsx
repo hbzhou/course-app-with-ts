@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Authors from "@/components/Authors/Authors";
 import CourseInfo from "@/components/CourseInfo/CourseInfo";
 import Courses from "@/components/Courses/Courses";
@@ -11,6 +13,17 @@ import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "@/store/store";
 import { actions } from "@/store/auth/auth.slice";
+
+// Create a client for React Query
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 const AuthBootstrap: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const dispatch = useDispatch();
@@ -25,55 +38,58 @@ const AuthBootstrap: React.FC<{ children: React.ReactElement }> = ({ children })
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <AuthBootstrap>
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <ProtectedRoute>
-                  <Courses />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/courses'
-              element={
-                <ProtectedRoute>
-                  <Courses />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/courses/:id'
-              element={
-                <ProtectedRoute>
-                  <CourseInfo />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/authors'
-              element={
-                <ProtectedRoute>
-                  <Authors />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path='/courses/add'
-              element={
-                <ProtectedRoute>
-                  <CreateCourse />
-                </ProtectedRoute>
-              }
-            />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Registration />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthBootstrap>
+      <QueryClientProvider client={queryClient}>
+        <AuthBootstrap>
+          <BrowserRouter>
+            <Header />
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  <ProtectedRoute>
+                    <Courses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/courses'
+                element={
+                  <ProtectedRoute>
+                    <Courses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/courses/:id'
+                element={
+                  <ProtectedRoute>
+                    <CourseInfo />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/authors'
+                element={
+                  <ProtectedRoute>
+                    <Authors />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path='/courses/add'
+                element={
+                  <ProtectedRoute>
+                    <CreateCourse />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Registration />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthBootstrap>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Provider>
   );
 };

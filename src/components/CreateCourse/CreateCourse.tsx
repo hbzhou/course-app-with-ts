@@ -7,11 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/common/Card";
 import { Textarea } from "@/common/Textarea";
 import moment from "moment";
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch, selectAuthors } from "@/store/store";
-import { createCourse } from "@/store/course/course.thunk";
+import { useAuthors } from "@/hooks/useAuthors";
+import { useCreateCourse } from "@/hooks/useCourses";
 import { Course } from "@/types/course";
 import { Author } from "@/types/author";
 
@@ -22,24 +21,31 @@ const CreateCourse: React.FC = () => {
     control,
     formState: { errors },
   } = useForm<Course>();
-  const dispatch = useDispatch<AppDispatch>();
   const navigator = useNavigate();
-  const authors = useSelector(selectAuthors);
+  const { data: authors = [] } = useAuthors();
+  const createCourseMutation = useCreateCourse();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const onSubmit: SubmitHandler<Course> = (data) => {
-    const creationDate = moment().format('MM/DD/YYYY');
-    const courseData = {
-      ...data,
-      creationDate,
-      authors: (data.authors as unknown as string[]).map((authorId: string) => {
-        const author = authors.find((a: Author) => a.id === authorId);
-        return author || { id: authorId, name: '' };
-      })
-    };
-    dispatch(createCourse(courseData));
-    navigator("/courses");
+  const onSubmit: SubmitHandler<Course> = async (data) => {
+    try {
+      setErrorMessage(null);
+      const creationDate = moment().format('MM/DD/YYYY');
+      const courseData = {
+        ...data,
+        creationDate,
+        authors: (data.authors as unknown as string[]).map((authorId: string) => {
+          const author = authors.find((a: Author) => a.id === authorId);
+          return author || { id: authorId, name: '' };
+        })
+      };
+      await createCourseMutation.mutateAsync(courseData);
+      navigator("/courses");
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : "Failed to create course");
+    }
   };
-  const authorOptions = useSelector(selectAuthors).map((author: Author) => {
+
+  const authorOptions = authors.map((author: Author) => {
     return { value: author.id, label: author.name };
   });
 
@@ -51,6 +57,11 @@ const CreateCourse: React.FC = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {errorMessage && (
+              <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md text-sm">
+                {errorMessage}
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="title">Course Title</Label>
               <Input
@@ -110,11 +121,12 @@ const CreateCourse: React.FC = () => {
                 type="button"
                 variant="outline"
                 onClick={() => navigator("/courses")}
+                disabled={createCourseMutation.isPending}
               >
                 Cancel
               </Button>
-              <Button type="submit">
-                Create Course
+              <Button type="submit" disabled={createCourseMutation.isPending}>
+                {createCourseMutation.isPending ? "Creating..." : "Create Course"}
               </Button>
             </div>
           </form>
